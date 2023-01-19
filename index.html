@@ -31,7 +31,7 @@
       line-height: 0;
       position: absolute;
       left: 0px;
-      will-change: transform;
+      transform: translate(var(--x-position), var(--y-position));
     }
     .control {
       position: relative;
@@ -80,10 +80,13 @@
     var minWidth = 70;
     var maxWidth = 140;
 
+    var index = 0;
+
     function gamestart() { //遊戲開始
       flag = 1;
       count = 0;
-      sec = 30; // every round is 30 seconds
+      sec = 30;
+      index =0; // every round is 30 seconds
       combo.textContent = `成績分數:0`;
       time.textContent = `剩餘時間:30s`;
       btn.removeEventListener("click", gamestart);//關閉點選
@@ -100,6 +103,52 @@
         }
       }, 1000);
 
+      // setTimeout(showDio,6000);
+      setInterval(function(){
+        if (sec == 0) { //0則停止重複延遲
+          clearInterval(start);
+        }
+        else {
+          showDio(index);
+          index+=1;
+        }
+      },6000);
+    }
+
+    function getRandomInt (min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function setDioPosition(element,i){
+
+      element = document.getElementById(i);
+      var vpHeight = window.innerHeight;
+      var vpWidth = window.innerWidth;
+      
+      // Image Position
+      var xPos = getRandomInt(0, vpWidth - element.offsetWidth);
+      var yPos = getRandomInt(0, vpHeight - element.offsetHeight);
+      element.style.cssText += '--x-position:' + xPos + 'px; --y-position:' + yPos +'px;';
+    }
+
+    function createDio(i){
+      var dio = document.createElement("img");
+      dio.src = "img/dio.png"
+      dio.id = i;
+      dio.setAttribute("class","dio")
+      
+      document.body.appendChild(dio);
+       return {
+        element: dio,
+        left: 0,
+        top: 0,
+      };
+    }
+
+    function showDio(i){
+      var dio = createDio(i);
+      setDioPosition(dio,i);
+      console.log("dio")
     }
     
     
