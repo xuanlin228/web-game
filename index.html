@@ -1,159 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Whack a Mole - Loki's JSROOM</title>
-  <style>
-    body {
-      margin: 0 auto;
-      width: 100vw;
-      height: 100vh;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Whack a Mole - Loki's JSROOM</title>
+    <link href="index.css" rel="stylesheet">
+  </head>
 
-    .content {
-      display: inline-block;
-      margin: 0 auto;
-      top: 10%;
-      position: relative;
-    }
-
-    .row {
-      display: flex;
-    }
-
-    .dio {
-      width: 100px;
-      height: 100px;
-      border: 0px solid #777;
-      line-height: 0;
-      position: absolute;
-      left: 0px;
-      transform: translate(var(--x-position), var(--y-position));
-    }
-    .control {
-      position: absolute;
-      top: 500px;
-      width: 330px;
-      margin: 0 auto;
-    }
-
-    #time, #combo {
-      width: 30%;
-      display: inline-block;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="content">
-    <div class="row">
-      <!-- <img src="img/dio.png" class="dio" title="state" onclick="remove()"> -->
-    </div>
-    <div class="control">
-      <div style="width:100%;display: flex">
-        <span id="time">剩餘時間:30s</span>
-        <input type="button" value="遊戲開始" style="width:40%">
-        <span id="combo">成績分數:0</span>
+  <body>
+    <div class="content">
+      <div class="row">
+        <!-- <img src="img/dio.png" class="dio" title="state" onclick="remove()"> -->
       </div>
-      <hr>
-      <b>遊戲說明</b>
-      <p>按下遊戲開始之後，支援手機畫面點選。</p>
-      <hr>
+      <div class="control">
+        <div style="width: 100%; display: flex">
+          <span id="time">剩餘時間:30s</span>
+          <input type="button" value="遊戲開始" style="width: 40%" />
+          <span id="combo">成績分數:0</span>
+        </div>
+        <hr />
+        <b>遊戲說明</b>
+        <p>按下遊戲開始之後，支援手機畫面點選。</p>
+        <hr />
+      </div>
     </div>
-  </div>
 
-  <script>
-    var btn = document.getElementsByTagName("input")[0];//找到input
-    var time = document.getElementById("time");//找到時間
-    var combo = document.getElementById("combo");//找到分數
-    btn.addEventListener("click", gamestart);//規劃點選動作
-    var flag = 0; //遊戲開始為1，停止為0
-    var sec = 0;
-    var count = 0;
+    <script>
+      var btn = document.getElementsByTagName("input")[0];//找到input
+      var time = document.getElementById("time");//找到時間
+      var combo = document.getElementById("combo");//找到分數
+      btn.addEventListener("click", gamestart);//規劃點選動作
+      var flag = 0; //遊戲開始為1，停止為0
+      var sec = 0;
+      var count = 0;
 
-    var vw = window.innerWidth;
-    var vh = window.innerHeight;
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
 
-    var minWidth = 70;
-    var maxWidth = 140;
+      var minWidth = 70;
+      var maxWidth = 140;
 
-    var index = 0;
+      var index = 0;
 
-    function gamestart() { //遊戲開始
-      flag = 1;
-      count = 0;
-      sec = 30;
-      index =0; // every round is 30 seconds
-      combo.textContent = `成績分數:0`;
-      time.textContent = `剩餘時間:30s`;
-      btn.removeEventListener("click", gamestart);//關閉點選
+      function gamestart() { //遊戲開始
+        flag = 1;
+        count = 0;
+        sec = 30;
+        index = 0; // every round is 30 seconds
+        combo.textContent = `成績分數:0`;
+        time.textContent = `剩餘時間:30s`;
+        btn.removeEventListener("click", gamestart);//關閉點選
 
-      var start = setInterval(function () { //倒數計時開始，每秒做顯示剩餘時間
-        if (sec == 0) { //0則停止重複延遲
-          clearInterval(start);
-          flag = 0;
-          btn.addEventListener("click", gamestart);//開放點選
-        }
-        else {
-          sec--;
-          time.textContent = `剩餘時間:${sec}s`;
-        }
-      }, 1000);
+        var start = setInterval(function () { //倒數計時開始，每秒做顯示剩餘時間
+          if (sec == 0) { //0則停止重複延遲
+            clearInterval(start);
+            flag = 0;
+            btn.addEventListener("click", gamestart);//開放點選
+          }
+          else {
+            sec--;
+            time.textContent = `剩餘時間:${sec}s`;
+          }
+        }, 1000);
 
-      // setTimeout(showDio,6000);
-      setInterval(function(){
-        if (sec == 0) { //0則停止重複延遲
-          clearInterval(start);
-        }
-        else {
-          showDio(index);
-          index+=1;
-        }
-      },6000);
-    }
+        // setTimeout(showDio,6000);
+        var show = setInterval(function(){
+          if (sec == 0) { //0則停止重複延遲
+            clearInterval(show);
+          }
+          else {
+            showDio(index);
+            index = index + 1;
+          }
+        },6000);
+      }
 
-    function getRandomInt (min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+      function getRandomInt (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
 
-    function setDioPosition(element,i){
+      function setDioPosition(element,i){
 
-      element = document.getElementById(i);
-      var vpHeight = window.innerHeight;
-      var vpWidth = window.innerWidth;
-      
-      // Image Position
-      var xPos = getRandomInt(0, vpWidth - element.offsetWidth);
-      var yPos = getRandomInt(0, vpHeight - element.offsetHeight);
-      element.style.cssText += '--x-position:' + xPos + 'px; --y-position:' + yPos +'px;';
-    }
+        element = document.getElementById(i);
+        // var controlbox = document.getElementsByClassName("control");
+        // var controlRect = controlbox.getBoundingClientRect();
 
-    function createDio(i){
-      var dio = document.createElement("img");
-      dio.src = "img/dio.png"
-      dio.id = i;
-      dio.setAttribute("class","dio")
-      
-      document.body.appendChild(dio);
-       return {
-        element: dio,
-        left: 0,
-        top: 0,
-      };
-    }
+        var vpHeight = window.innerHeight;
+        var vpWidth = window.innerWidth;
 
-    function showDio(i){
-      var dio = createDio(i);
-      setDioPosition(dio,i);
-      console.log("dio")
-    }
-    
-    
-  </script>
+        // Image Position
+        var xPos = getRandomInt(0, vpWidth - element.offsetWidth);
+        var yPos = getRandomInt(0, vpHeight - element.offsetHeight);
 
-</body>
+        // if insection
+        // var controlRectX = controlRect.x;
+        // var controlRectY = controlRect.y;
+        // console.log(controlRectX);
 
+        element.style.cssText += '--x-position:' + xPos + 'px; --y-position:' + yPos +'px;';
+        element.style.cssText += 'animation:move 25s linear 1;'
+      }
+
+      function createDio(i){
+        var dio = document.createElement("img");
+        dio.src = "img/dio.png"
+        dio.id = i;
+        dio.setAttribute("class","dio");
+
+        document.body.appendChild(dio);
+         return {
+          element: dio,
+          left: 0,
+          top: 0,
+        };
+      }
+
+      function showDio(i){
+        var dio = createDio(i);
+        setDioPosition(dio,i);
+        console.log("dio")
+      }
+    </script>
+  </body>
 </html>
