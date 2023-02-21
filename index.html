@@ -7,122 +7,171 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Whack a Mole - Loki's JSROOM</title>
-    <link href="index.css" rel="stylesheet">
+    <title>JOJO Game</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="index.css" rel="stylesheet" />
   </head>
 
-  <body>
-    <div class="content">
-      <div class="row">
-        <!-- <img src="img/dio.png" class="dio" title="state" onclick="remove()"> -->
-      </div>
-      <div class="control">
-        <div style="width: 100%; display: flex">
-          <span id="time">剩餘時間:30s</span>
-          <input type="button" value="遊戲開始" style="width: 40%" />
-          <span id="combo">成績分數:0</span>
-        </div>
-        <hr />
-        <b>遊戲說明</b>
-        <p>按下遊戲開始之後，支援手機畫面點選。</p>
-        <hr />
+  <body onload="startGame()">
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+
+    <div class="ratio ratio-4x3">
+      <div class="canvas-wrap">
+        <canvas
+          class="cover-fit"
+          id="myCanvas"
+          width="100%"
+          height="100%"
+        ></canvas>
       </div>
     </div>
-
     <script>
-      var btn = document.getElementsByTagName("input")[0];//找到input
-      var time = document.getElementById("time");//找到時間
-      var combo = document.getElementById("combo");//找到分數
-      btn.addEventListener("click", gamestart);//規劃點選動作
-      var flag = 0; //遊戲開始為1，停止為0
-      var sec = 0;
-      var count = 0;
+      var myGamePiece;
+      var myBackground;
 
-      var vw = window.innerWidth;
-      var vh = window.innerHeight;
+      var gamecanvas = document.getElementById("myCanvas");
+      var bgwidth = gamecanvas.width;
+      var bgheight = gamecanvas.height;
 
-      var minWidth = 70;
-      var maxWidth = 140;
-
-      var index = 0;
-
-      function gamestart() { //遊戲開始
-        flag = 1;
-        count = 0;
-        sec = 30;
-        index = 0; // every round is 30 seconds
-        combo.textContent = `成績分數:0`;
-        time.textContent = `剩餘時間:30s`;
-        btn.removeEventListener("click", gamestart);//關閉點選
-
-        var start = setInterval(function () { //倒數計時開始，每秒做顯示剩餘時間
-          if (sec == 0) { //0則停止重複延遲
-            clearInterval(start);
-            flag = 0;
-            btn.addEventListener("click", gamestart);//開放點選
-          }
-          else {
-            sec--;
-            time.textContent = `剩餘時間:${sec}s`;
-          }
-        }, 1000);
-
-        // setTimeout(showDio,6000);
-        var show = setInterval(function(){
-          if (sec == 0) { //0則停止重複延遲
-            clearInterval(show);
-          }
-          else {
-            showDio(index);
-            index = index + 1;
-          }
-        },6000);
+      function startGame() {
+        myGamePiece1 = new component(
+          225,
+          225,
+          "img/CH_cheng.png",
+          200,
+          130,
+          "image"
+        );
+        myGamePiece2 = new component(
+          225,
+          225,
+          "img/flower.png",
+          360,
+          120,
+          "image"
+        );
+        myGamePiece3 = new component(
+          225,
+          125,
+          "img/test.png",
+          100,
+          320,
+          "image"
+        );
+        myGamePiece4 = new component(
+          225,
+          125,
+          "img/test.png",
+          600,
+          120,
+          "image"
+        );
+        myGamePiece5 = new component(
+          125,
+          125,
+          "img/CH_cheng.png",
+          400,
+          415,
+          "image"
+        );
+        myBackground = new component(800, 600, "img/bg.jpg", 0, 0, "image");
+        myGameArea.start();
       }
 
-      function getRandomInt (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
+      var myGameArea = {
+        canvas: gamecanvas,
+        start: function () {
+          this.canvas.width = 800;
+          this.canvas.height = 600;
+          this.context = this.canvas.getContext("2d");
+          document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+          this.frameNo = 0;
+          this.interval = setInterval(updateGameArea, 20);
+        },
+        clear: function () {
+          this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        },
+        stop: function () {
+          clearInterval(this.interval);
+        },
+      };
 
-      function setDioPosition(element,i){
+      function component(width, height, color, x, y, type) {
+        this.type = type;
+        if (type == "image") {
+          this.image = new Image();
+          this.image.src = color;
+        }
 
-        element = document.getElementById(i);
-        // var controlbox = document.getElementsByClassName("control");
-        // var controlRect = controlbox.getBoundingClientRect();
-
-        var vpHeight = window.innerHeight;
-        var vpWidth = window.innerWidth;
-
-        // Image Position
-        var xPos = getRandomInt(0, vpWidth - element.offsetWidth);
-        var yPos = getRandomInt(0, vpHeight - element.offsetHeight);
-
-        // if insection
-        // var controlRectX = controlRect.x;
-        // var controlRectY = controlRect.y;
-        // console.log(controlRectX);
-
-        element.style.cssText += '--x-position:' + xPos + 'px; --y-position:' + yPos +'px;';
-        element.style.cssText += 'animation:move 25s linear 1;'
-      }
-
-      function createDio(i){
-        var dio = document.createElement("img");
-        dio.src = "img/dio.png"
-        dio.id = i;
-        dio.setAttribute("class","dio");
-
-        document.body.appendChild(dio);
-         return {
-          element: dio,
-          left: 0,
-          top: 0,
+        this.width = width;
+        this.height = height;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.x = x;
+        this.y = y;
+        this.update = function () {
+          ctx = myGameArea.context;
+          if (type == "image") {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+          } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+          }
+        };
+        this.newPos = function () {
+          this.x += this.speedX;
+          this.y += this.speedY;
         };
       }
 
-      function showDio(i){
-        var dio = createDio(i);
-        setDioPosition(dio,i);
-        console.log("dio")
+      function updateGameArea() {
+        myGameArea.clear();
+        myBackground.newPos();
+        myBackground.update();
+        myGamePiece1.newPos();
+        myGamePiece1.update();
+        myGamePiece2.newPos();
+        myGamePiece2.update();
+        myGamePiece4.newPos();
+        myGamePiece4.update();
+        myGamePiece3.newPos();
+        myGamePiece3.update();
+      }
+
+      function move(dir) {
+        myGamePiece.image.src = "flower.png";
+        if (dir == "up") {
+          myGamePiece.speedY = -1;
+        }
+        if (dir == "down") {
+          myGamePiece.speedY = 1;
+        }
+        if (dir == "left") {
+          myGamePiece.speedX = -1;
+        }
+        if (dir == "right") {
+          myGamePiece.speedX = 1;
+        }
+      }
+
+      function clearmove() {
+        myGamePiece.image.src = "CH_DIO.png";
+        myGamePiece.speedX = 0;
+        myGamePiece.speedY = 0;
       }
     </script>
   </body>
