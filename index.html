@@ -48,46 +48,17 @@
       var bgheight = gamecanvas.height;
 
       function startGame() {
-        myGamePiece1 = new component(
-          225,
-          225,
+        myGamePieceCheng = new component(
+          125,
+          125,
           "img/CH_cheng.png",
           200,
-          130,
-          "image"
+          300,
+          "image",
+          10,
+          0
         );
-        myGamePiece2 = new component(
-          225,
-          225,
-          "img/flower.png",
-          360,
-          120,
-          "image"
-        );
-        myGamePiece3 = new component(
-          225,
-          125,
-          "img/test.png",
-          100,
-          320,
-          "image"
-        );
-        myGamePiece4 = new component(
-          225,
-          125,
-          "img/test.png",
-          600,
-          120,
-          "image"
-        );
-        myGamePiece5 = new component(
-          125,
-          125,
-          "img/CH_cheng.png",
-          400,
-          415,
-          "image"
-        );
+        
         myBackground = new component(800, 600, "img/bg.jpg", 0, 0, "image");
         myGameArea.start();
       }
@@ -110,7 +81,7 @@
         },
       };
 
-      function component(width, height, color, x, y, type) {
+      function component(width, height, color, x, y, type, speedx,speedy) {
         this.type = type;
         if (type == "image") {
           this.image = new Image();
@@ -119,8 +90,8 @@
 
         this.width = width;
         this.height = height;
-        this.speedX = 0;
-        this.speedY = 0;
+        this.speedX = speedx;
+        this.speedY = speedy;
         this.x = x;
         this.y = y;
         this.update = function () {
@@ -134,6 +105,18 @@
         };
         this.newPos = function () {
           this.x += this.speedX;
+          ctx = myGameArea.context;
+          if (this.x > 700){
+            this.speedX = -10;
+            // ctx.translate((700 + this.width),0);
+            // ctx.scale(-1,1);
+            
+          }else if (this.x < 0){
+            this.speedX = 10;
+            // ctx.translate(0+this.width,0);
+            // ctx.scale(-1,1);
+            
+          }
           this.y += this.speedY;
         };
       }
@@ -142,14 +125,9 @@
         myGameArea.clear();
         myBackground.newPos();
         myBackground.update();
-        myGamePiece1.newPos();
-        myGamePiece1.update();
-        myGamePiece2.newPos();
-        myGamePiece2.update();
-        myGamePiece4.newPos();
-        myGamePiece4.update();
-        myGamePiece3.newPos();
-        myGamePiece3.update();
+        myGamePieceCheng.newPos();
+        myGamePieceCheng.update();
+        
       }
 
       function move(dir) {
