@@ -58,8 +58,18 @@
           10,
           0
         );
-        
-        myBackground = new component(800, 600, "img/bg.jpg", 0, 0, "image");
+
+        myBackground = new component(
+          800,
+          600,
+          "img/bg.jpg",
+          0,
+          0,
+          "image",
+          0,
+          0
+        );
+
         myGameArea.start();
       }
 
@@ -72,16 +82,18 @@
           document.body.insertBefore(this.canvas, document.body.childNodes[0]);
           this.frameNo = 0;
           this.interval = setInterval(updateGameArea, 20);
+          this.dropinterval = setInterval(dropDio, 20);
         },
         clear: function () {
           this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         },
         stop: function () {
           clearInterval(this.interval);
+          clearInterval(this.dropinterval);
         },
       };
 
-      function component(width, height, color, x, y, type, speedx,speedy) {
+      function component(width, height, color, x, y, type, speedx, speedy) {
         this.type = type;
         if (type == "image") {
           this.image = new Image();
@@ -106,16 +118,14 @@
         this.newPos = function () {
           this.x += this.speedX;
           ctx = myGameArea.context;
-          if (this.x > 700){
+          if (this.x > 700) {
             this.speedX = -10;
             // ctx.translate((700 + this.width),0);
             // ctx.scale(-1,1);
-            
-          }else if (this.x < 0){
+          } else if (this.x < 0) {
             this.speedX = 10;
             // ctx.translate(0+this.width,0);
             // ctx.scale(-1,1);
-            
           }
           this.y += this.speedY;
         };
@@ -127,7 +137,24 @@
         myBackground.update();
         myGamePieceCheng.newPos();
         myGamePieceCheng.update();
-        
+        // myGamePieceDio.newPos();
+        // myGamePieceDio.update();
+      }
+
+      function dropDio() {
+        myGamePieceDio = new component(
+          125,
+          125,
+          "img/CH_DIO.png",
+          200,
+          50,
+          "image",
+          0,
+          10
+        );
+        myGamePieceDio.newPos();
+        myGamePieceDio.update();
+
       }
 
       function move(dir) {
