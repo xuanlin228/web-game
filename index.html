@@ -47,6 +47,7 @@
       var bgwidth = gamecanvas.width;
       var bgheight = gamecanvas.height;
       var dios = [];
+      var sec = 30;
 
       function startGame() {
         myGamePieceCheng = new component(
@@ -84,6 +85,7 @@
           this.frameNo = 0;
           this.interval = setInterval(updateGameArea, 20);
           this.dropinterval = setInterval(dropDio, 20);
+          this.timeinterval = setInterval(countDown,1000);
         },
         clear: function () {
           this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -166,21 +168,18 @@
         }
       }
 
-      // function move(dir) {
-      //   myGamePiece.image.src = "flower.png";
-      //   if (dir == "up") {
-      //     myGamePiece.speedY = -1;
-      //   }
-      //   if (dir == "down") {
-      //     myGamePiece.speedY = 1;
-      //   }
-      //   if (dir == "left") {
-      //     myGamePiece.speedX = -1;
-      //   }
-      //   if (dir == "right") {
-      //     myGamePiece.speedX = 1;
-      //   }
-      // }
+      function countDown(){
+        ctx = myGameArea.context;
+        if (sec == 0){
+          clearInterval(this.timeinterval);
+        }
+        else{
+          sec--;
+          ctx.font = "50px Comic Sans MS";
+          ctx.fillStyle = "red";
+          ctx.fillText(sec.toString(), 0, 300);
+        }
+      }
 
       function clearmove() {
         myGamePiece.image.src = "CH_DIO.png";
