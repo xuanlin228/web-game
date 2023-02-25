@@ -46,6 +46,7 @@
       var gamecanvas = document.getElementById("myCanvas");
       var bgwidth = gamecanvas.width;
       var bgheight = gamecanvas.height;
+      var dios = [];
 
       function startGame() {
         myGamePieceCheng = new component(
@@ -53,7 +54,7 @@
           125,
           "img/CH_cheng.png",
           200,
-          300,
+          400,
           "image",
           10,
           0
@@ -116,17 +117,20 @@
           }
         };
         this.newPos = function () {
-          this.x += this.speedX;
+          
           ctx = myGameArea.context;
-          if (this.x > 700) {
-            this.speedX = -10;
+          if (this.x + 125 > 800) {
+            this.speedX = -this.speedX;
             // ctx.translate((700 + this.width),0);
             // ctx.scale(-1,1);
-          } else if (this.x < 0) {
-            this.speedX = 10;
+          } 
+          if (this.x  < 0) {
+            this.speedX = -this.speedX;
             // ctx.translate(0+this.width,0);
             // ctx.scale(-1,1);
           }
+
+          this.x += this.speedX;
           this.y += this.speedY;
         };
       }
@@ -142,41 +146,51 @@
       }
 
       function dropDio() {
-        myGamePieceDio = new component(
-          125,
-          125,
-          "img/CH_DIO.png",
-          200,
-          50,
-          "image",
-          0,
-          10
-        );
-        myGamePieceDio.newPos();
-        myGamePieceDio.update();
+        while (dios.length < 4) {
+          var myGamePieceDio = new component(
+            125,
+            125,
+            "img/CH_DIO.png",
+            random(200,700),
+            50,
+            "image",
+            0,
+            random(5,10)
+          );
+          dios.push(myGamePieceDio);
+        }
 
+        for(i = 0; i < dios.length; i++) {
+          dios[i].newPos();
+          dios[i].update();
+        }
       }
 
-      function move(dir) {
-        myGamePiece.image.src = "flower.png";
-        if (dir == "up") {
-          myGamePiece.speedY = -1;
-        }
-        if (dir == "down") {
-          myGamePiece.speedY = 1;
-        }
-        if (dir == "left") {
-          myGamePiece.speedX = -1;
-        }
-        if (dir == "right") {
-          myGamePiece.speedX = 1;
-        }
-      }
+      // function move(dir) {
+      //   myGamePiece.image.src = "flower.png";
+      //   if (dir == "up") {
+      //     myGamePiece.speedY = -1;
+      //   }
+      //   if (dir == "down") {
+      //     myGamePiece.speedY = 1;
+      //   }
+      //   if (dir == "left") {
+      //     myGamePiece.speedX = -1;
+      //   }
+      //   if (dir == "right") {
+      //     myGamePiece.speedX = 1;
+      //   }
+      // }
 
       function clearmove() {
         myGamePiece.image.src = "CH_DIO.png";
         myGamePiece.speedX = 0;
         myGamePiece.speedY = 0;
+      }
+
+      function random(min, max) {
+        var num = Math.floor(Math.random()*(max-min)) + min;
+        return num;
       }
     </script>
   </body>
