@@ -82,7 +82,6 @@
           0,
           0
         );
-
         myGameArea.start();
       }
 
@@ -109,6 +108,9 @@
         if (type == "image") {
           this.image = new Image();
           this.image.src = color;
+        }
+        if (type == "text") {
+          this.text = "" + sec;
         }
 
         this.width = width;
@@ -163,7 +165,7 @@
         myGamePieceCheng.update();
 
         myGameArea.frameNo += 1;
-        if (myGameArea.frameNo == 1 || everyinterval(50)) {
+        if (everyinterval(50)) {
           sec--;
           if (sec < 10) {
             myGameTimer.text = "0" + sec;
