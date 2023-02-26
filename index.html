@@ -72,6 +72,17 @@
           0
         );
 
+        myGameTimer = new component(
+          "45px",
+          "Comic Sans MS",
+          "red",
+          5,
+          150,
+          "text",
+          0,
+          0
+        );
+
         myGameArea.start();
       }
 
@@ -84,15 +95,12 @@
           document.body.insertBefore(this.canvas, document.body.childNodes[0]);
           this.frameNo = 0;
           this.interval = setInterval(updateGameArea, 20);
-          this.dropinterval = setInterval(dropDio, 20);
-          this.timeinterval = setInterval(countDown,1000);
         },
         clear: function () {
           this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         },
         stop: function () {
           clearInterval(this.interval);
-          clearInterval(this.dropinterval);
         },
       };
 
@@ -113,23 +121,28 @@
           ctx = myGameArea.context;
           if (type == "image") {
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+          } else if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
           } else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
           }
         };
         this.newPos = function () {
-          
           ctx = myGameArea.context;
           if (this.x + 125 > 800) {
             this.speedX = -this.speedX;
             // ctx.translate((700 + this.width),0);
             // ctx.scale(-1,1);
-          } 
-          if (this.x  < 0) {
+          }
+          if (this.x < 0) {
             this.speedX = -this.speedX;
-            // ctx.translate(0+this.width,0);
-            // ctx.scale(-1,1);
+          }
+
+          if (this.y > 600) {
+            dios.pop();
           }
 
           this.x += this.speedX;
@@ -138,46 +151,50 @@
       }
 
       function updateGameArea() {
+        ctx = myGameArea.context;
+        if (sec == 0) {
+          myGameArea.stop();
+        }
+
         myGameArea.clear();
         myBackground.newPos();
         myBackground.update();
         myGamePieceCheng.newPos();
         myGamePieceCheng.update();
-        // myGamePieceDio.newPos();
-        // myGamePieceDio.update();
+
+        myGameArea.frameNo += 1;
+        if (myGameArea.frameNo == 1 || everyinterval(50)) {
+          sec--;
+          if (sec < 10) {
+            myGameTimer.text = "0" + sec;
+          } else {
+            myGameTimer.text = "" + sec;
+          }
+        }
+        if (myGameArea.frameNo == 1 || everyinterval(150)) {
+          dropDio();
+        }
+        for (i = 0; i < dios.length; i++) {
+          dios[i].newPos();
+          dios[i].update();
+        }
+
+        myGameTimer.update();
       }
 
       function dropDio() {
-        while (dios.length < 4) {
+        while (dios.length < 6) {
           var myGamePieceDio = new component(
             125,
             125,
             "img/CH_DIO.png",
-            random(200,700),
+            random(0, 700),
             50,
             "image",
             0,
-            random(5,10)
+            random(5, 10)
           );
           dios.push(myGamePieceDio);
-        }
-
-        for(i = 0; i < dios.length; i++) {
-          dios[i].newPos();
-          dios[i].update();
-        }
-      }
-
-      function countDown(){
-        ctx = myGameArea.context;
-        if (sec == 0){
-          clearInterval(this.timeinterval);
-        }
-        else{
-          sec--;
-          ctx.font = "50px Comic Sans MS";
-          ctx.fillStyle = "red";
-          ctx.fillText(sec.toString(), 0, 300);
         }
       }
 
@@ -188,8 +205,15 @@
       }
 
       function random(min, max) {
-        var num = Math.floor(Math.random()*(max-min)) + min;
+        var num = Math.floor(Math.random() * (max - min)) + min;
         return num;
+      }
+
+      function everyinterval(n) {
+        if ((myGameArea.frameNo / n) % 1 == 0) {
+          return true;
+        }
+        return false;
       }
     </script>
   </body>
