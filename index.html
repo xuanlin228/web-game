@@ -48,6 +48,8 @@
       var bgheight = gamecanvas.height;
       var dios = [];
       var sec = 30;
+      var liveStars = [];
+      // var starXPos = 700;
 
       function startGame() {
         myGamePieceCheng = new component(
@@ -82,6 +84,54 @@
           0,
           0
         );
+
+        // while (liveStars.length < 3) {
+        //   myGameLiveStar = new component(
+        //     100,
+        //     100,
+        //     "img/icon_s.png",
+        //     starXPos,
+        //     150,
+        //     "image",
+        //     0,
+        //     0
+        //   );
+        //   liveStars.push();
+        //   starXPos -= 120;
+        // }
+        myGameStar1 = new component(
+          50,
+          50,
+          "img/icon_s.png",
+          700,
+          115,
+          "image",
+          0,
+          0
+        );
+        liveStars.push(myGameStar1);
+        myGameStar2 = new component(
+          50,
+          50,
+          "img/icon_s.png",
+          650,
+          115,
+          "image",
+          0,
+          0
+        );
+        liveStars.push(myGameStar2);
+        myGameStar3 = new component(
+          50,
+          50,
+          "img/icon_s.png",
+          600,
+          115,
+          "image",
+          0,
+          0
+        );
+        liveStars.push(myGameStar3);
         myGameArea.start();
       }
 
@@ -179,6 +229,10 @@
         for (i = 0; i < dios.length; i++) {
           dios[i].newPos();
           dios[i].update();
+        }
+        for (i = 0; i < liveStars.length; i++) {
+          liveStars[i].newPos();
+          liveStars[i].update();
         }
 
         myGameTimer.update();
