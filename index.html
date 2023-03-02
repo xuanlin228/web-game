@@ -193,10 +193,6 @@
             this.speedX = -this.speedX;
           }
 
-          if (this.y > 600) {
-            dios.pop();
-          }
-
           this.x += this.speedX;
           this.y += this.speedY;
         };
@@ -223,9 +219,22 @@
             myGameTimer.text = "" + sec;
           }
         }
-        if (myGameArea.frameNo == 1 || everyinterval(150)) {
-          dropDio();
+        if (myGameArea.frameNo == 1 || everyinterval(70)) {
+          while(dios.length < 5){
+            dropDio();
+          }
         }
+        /*將超過畫面的dio消除至於此instead of Component*/
+        /*-----------------------------------------------*/
+        var temp = 100;
+        for(i = 0; i < dios.length; i++){
+          if(dios[i].y > 500){
+            temp = i;
+            break;
+          }
+        }
+        dios.splice(temp, 1);
+        /*-----------------------------------------------*/
         for (i = 0; i < dios.length; i++) {
           dios[i].newPos();
           dios[i].update();
@@ -239,19 +248,20 @@
       }
 
       function dropDio() {
-        while (dios.length < 6) {
-          var myGamePieceDio = new component(
-            125,
-            125,
-            "img/CH_DIO.png",
-            random(0, 700),
-            50,
-            "image",
-            0,
-            random(5, 10)
-          );
-          dios.push(myGamePieceDio);
-        }
+        //將dropDio的interval改成70
+        //while (dios.length < 6) {
+        var myGamePieceDio = new component(
+          125,
+          125,
+          "img/CH_DIO.png",
+          random(0, 700),  //position of x coor
+          50,
+          "image",
+          0,
+          random(4, 8)   //speed of falling
+        );
+        dios.push(myGamePieceDio);
+        //}
       }
 
       function clearmove() {
