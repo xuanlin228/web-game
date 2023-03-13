@@ -29,16 +29,16 @@
       crossorigin="anonymous"
     ></script>
 
-    <div class="ratio ratio-4x3">
-      <div class="canvas-wrap">
-        <canvas
-          class="cover-fit"
-          id="myCanvas"
-          width="100%"
-          height="100%"
-        ></canvas>
-      </div>
+    <!-- <div class="ratio ratio-4x3"> -->
+    <div class="canvas-wrap">
+      <canvas
+        class="cover-fit"
+        id="myCanvas"
+        width="100%"
+        height="100%"
+      ></canvas>
     </div>
+    <!-- </div> -->
     <script>
       var myGamePiece;
       var myBackground;
@@ -85,20 +85,6 @@
           0
         );
 
-        // while (liveStars.length < 3) {
-        //   myGameLiveStar = new component(
-        //     100,
-        //     100,
-        //     "img/icon_s.png",
-        //     starXPos,
-        //     150,
-        //     "image",
-        //     0,
-        //     0
-        //   );
-        //   liveStars.push();
-        //   starXPos -= 120;
-        // }
         myGameStar1 = new component(
           50,
           50,
@@ -141,6 +127,11 @@
           this.canvas.width = 800;
           this.canvas.height = 600;
           this.context = this.canvas.getContext("2d");
+          window.addEventListener("click", function (e) {
+            removeDio(e);
+          });
+          this.x = 0;
+          this.y = 0;
           document.body.insertBefore(this.canvas, document.body.childNodes[0]);
           this.frameNo = 0;
           this.interval = setInterval(updateGameArea, 20);
@@ -162,6 +153,10 @@
         if (type == "text") {
           this.text = "" + sec;
         }
+        if (type == "dio") {
+          this.image = new Image();
+          this.image.src = color;
+        }
 
         this.width = width;
         this.height = height;
@@ -169,6 +164,7 @@
         this.speedY = speedy;
         this.x = x;
         this.y = y;
+        this.click = false;
         this.update = function () {
           ctx = myGameArea.context;
           if (type == "image") {
@@ -209,7 +205,6 @@
         myBackground.update();
         myGamePieceCheng.newPos();
         myGamePieceCheng.update();
-
         myGameArea.frameNo += 1;
         if (everyinterval(50)) {
           sec--;
@@ -220,15 +215,15 @@
           }
         }
         if (myGameArea.frameNo == 1 || everyinterval(70)) {
-          while(dios.length < 5){
+          while (dios.length < 1) {
             dropDio();
           }
         }
         /*將超過畫面的dio消除至於此instead of Component*/
         /*-----------------------------------------------*/
         var temp = 100;
-        for(i = 0; i < dios.length; i++){
-          if(dios[i].y > 500){
+        for (i = 0; i < dios.length; i++) {
+          if (dios[i].y > 500) {
             temp = i;
             break;
           }
@@ -254,11 +249,11 @@
           125,
           125,
           "img/CH_DIO.png",
-          random(0, 700),  //position of x coor
+          random(0, 700), //position of x coor
           50,
           "image",
           0,
-          random(4, 8)   //speed of falling
+          random(4, 8) //speed of falling
         );
         dios.push(myGamePieceDio);
         //}
@@ -280,6 +275,39 @@
           return true;
         }
         return false;
+      }
+      function removeDio(e) {
+        myGameArea.x = e.offsetX;
+        myGameArea.y = e.offsetY;
+        console.log(
+          "offsetX: " + myGameArea.x + " " + "offsetY: " + myGameArea.y
+        );
+        // var removeIndex = 100;
+        for (i = 0; i < dios.length; i++) {
+          var myleft = dios[i].x;
+          var myright = dios[i].x + dios[i].width;
+          var mytop = dios[i].y;
+          var mybottom = dios[i].y + dios[i].height;
+          console.log("left: " + myleft + " right: " + myright);
+          console.log("top: " + mytop + " bottom: " + mybottom);
+          if (
+            mybottom > myGameArea.y &&
+            mytop < myGameArea.y &&
+            myright > myGameArea.x &&
+            myleft < myGameArea.x
+          ) {
+            dios[i].click = true;
+          }
+          if (dios[i].click) {
+            console.log("true");
+            // removeIndex = i;
+            dios.splice(i, 1);
+            break;
+          } else {
+            console.log("false");
+          }
+          // dios.splice(removeIndex, 1);
+        }
       }
     </script>
   </body>
