@@ -31,12 +31,7 @@
 
     <!-- <div class="ratio ratio-4x3"> -->
     <div class="canvas-wrap">
-      <canvas
-        class="cover-fit"
-        id="myCanvas"
-        width="100%"
-        height="100%"
-      ></canvas>
+      <canvas class="cover-fit" id="myCanvas"></canvas>
     </div>
     <!-- </div> -->
     <script>
@@ -44,30 +39,47 @@
       var myBackground;
 
       var gamecanvas = document.getElementById("myCanvas");
-      var bgwidth = gamecanvas.width;
-      var bgheight = gamecanvas.height;
+      // var bgwidth = gamecanvas.width;
+      // var bgheight = gamecanvas.height;
       var dios = [];
       var sec = 30;
       var liveStars = [];
-      // var starXPos = 700;
+      var whratio = 16 / 9;
+      var scaleratio = 1;
+      var screenWidth = window.innerWidth;
+      var screenHeight = window.innerHeight;
+      var gamecanvasWidth = screenWidth;
+      var gamecanvasHeight = screenHeight;
+      var shift = 0;
 
+      if (screenHeight > screenWidth) {
+        gamecanvasHeight = screenWidth * (1 / whratio);
+      } else {
+        gamecanvasWidth = screenHeight * whratio;
+      }
+      if (gamecanvasWidth < screenWidth) {
+        shift = screenWidth / 2 - gamecanvasWidth / 2;
+      } else if (gamecanvasWidth > screenWidth) {
+        gamecanvasWidth = screenWidth;
+        gamecanvasHeight = screenWidth * (1 / whratio);
+      }
       function startGame() {
         myGamePieceCheng = new component(
           125,
           125,
           "img/CH_cheng.png",
-          200,
-          400,
+          gamecanvasWidth / 2,
+          gamecanvasHeight - 125,
           "image",
           10,
           0
         );
 
         myBackground = new component(
-          800,
-          600,
+          gamecanvasWidth,
+          gamecanvasHeight,
           "img/bg.jpg",
-          0,
+          shift,
           0,
           "image",
           0,
@@ -75,11 +87,11 @@
         );
 
         myGameTimer = new component(
-          "45px",
+          "35px",
           "Comic Sans MS",
           "red",
-          5,
-          150,
+          shift,
+          30,
           "text",
           0,
           0
@@ -89,8 +101,8 @@
           50,
           50,
           "img/icon_s.png",
-          700,
-          115,
+          shift + gamecanvasWidth - 150,
+          0,
           "image",
           0,
           0
@@ -100,8 +112,8 @@
           50,
           50,
           "img/icon_s.png",
-          650,
-          115,
+          shift + gamecanvasWidth - 100,
+          0,
           "image",
           0,
           0
@@ -111,8 +123,8 @@
           50,
           50,
           "img/icon_s.png",
-          600,
-          115,
+          shift + gamecanvasWidth - 50,
+          0,
           "image",
           0,
           0
@@ -124,8 +136,8 @@
       var myGameArea = {
         canvas: gamecanvas,
         start: function () {
-          this.canvas.width = 800;
-          this.canvas.height = 600;
+          this.canvas.width = gamecanvasWidth;
+          this.canvas.height = gamecanvasHeight;
           this.context = this.canvas.getContext("2d");
           window.addEventListener("click", function (e) {
             removeDio(e);
@@ -180,12 +192,12 @@
         };
         this.newPos = function () {
           ctx = myGameArea.context;
-          if (this.x + 125 > 800) {
+          if (this.x + 125 > gamecanvasWidth + shift) {
             this.speedX = -this.speedX;
             // ctx.translate((700 + this.width),0);
             // ctx.scale(-1,1);
           }
-          if (this.x < 0) {
+          if (this.x < shift) {
             this.speedX = -this.speedX;
           }
 
@@ -223,7 +235,7 @@
         /*-----------------------------------------------*/
         var temp = 100;
         for (i = 0; i < dios.length; i++) {
-          if (dios[i].y > 500) {
+          if (dios[i].y > gamecanvasHeight - 125) {
             temp = i;
             break;
           }
@@ -249,7 +261,7 @@
           125,
           125,
           "img/CH_DIO.png",
-          random(0, 700), //position of x coor
+          random(shift, shift + gamecanvasWidth - 125), //position of x coor
           50,
           "image",
           0,
@@ -306,7 +318,6 @@
           } else {
             console.log("false");
           }
-          // dios.splice(removeIndex, 1);
         }
       }
     </script>
