@@ -65,11 +65,11 @@
       }
       function startGame() {
         myGamePieceCheng = new component(
-          125,
-          125,
+          100,
+          100,
           "img/CH_cheng.png",
           gamecanvasWidth / 2,
-          gamecanvasHeight - 125,
+          gamecanvasHeight - 100,
           "image",
           5,
           0
@@ -228,7 +228,7 @@
           }
         }
         if (myGameArea.frameNo == 1 || everyinterval(70)) {
-          while (dios.length < 3) {
+          while (dios.length < 2) {
             dropDio();
           }
         }
@@ -236,14 +236,14 @@
           if (collision(dios[i], myGamePieceCheng)) {
             liveStars.pop();
             dios.splice(i, 1);
-            // break;
+            break;
           }
         }
         /*將超過畫面的dio消除至於此instead of Component*/
         /*-----------------------------------------------*/
         var temp = 100;
         for (i = 0; i < dios.length; i++) {
-          if (dios[i].y > gamecanvasHeight - 125) {
+          if (dios[i].y > myGamePieceCheng.y + myGamePieceCheng.height / 2) {
             temp = i;
             break;
           }
