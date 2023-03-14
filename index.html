@@ -71,7 +71,7 @@
           gamecanvasWidth / 2,
           gamecanvasHeight - 125,
           "image",
-          10,
+          5,
           0
         );
 
@@ -130,6 +130,7 @@
           0
         );
         liveStars.push(myGameStar3);
+
         myGameArea.start();
       }
 
@@ -208,7 +209,7 @@
 
       function updateGameArea() {
         ctx = myGameArea.context;
-        if (sec == 0) {
+        if (sec == 0 || liveStars.length == 0) {
           myGameArea.stop();
         }
 
@@ -227,8 +228,15 @@
           }
         }
         if (myGameArea.frameNo == 1 || everyinterval(70)) {
-          while (dios.length < 1) {
+          while (dios.length < 3) {
             dropDio();
+          }
+        }
+        for (i = 0; i < dios.length; i++) {
+          if (collision(dios[i], myGamePieceCheng)) {
+            liveStars.pop();
+            dios.splice(i, 1);
+            // break;
           }
         }
         /*將超過畫面的dio消除至於此instead of Component*/
@@ -258,14 +266,14 @@
         //將dropDio的interval改成70
         //while (dios.length < 6) {
         var myGamePieceDio = new component(
-          125,
-          125,
+          100,
+          100,
           "img/CH_DIO.png",
           random(shift, shift + gamecanvasWidth - 125), //position of x coor
           50,
           "image",
           0,
-          random(4, 8) //speed of falling
+          random(4, 5) //speed of falling
         );
         dios.push(myGamePieceDio);
         //}
@@ -318,6 +326,26 @@
           } else {
             console.log("false");
           }
+        }
+      }
+      function collision(dio, cheng) {
+        var dioleft = dio.x;
+        var dioright = dio.x + dio.width;
+        var diotop = dio.y;
+        var diobottom = dio.y + dio.height;
+        var chengleft = cheng.x;
+        var chengright = cheng.x + cheng.width;
+        var chengtop = cheng.y;
+        var chengbottom = cheng.y + cheng.height;
+        if (
+          chengbottom < diotop ||
+          chengtop > diobottom ||
+          chengright < dioleft ||
+          chengleft > dioright
+        ) {
+          return false;
+        } else {
+          return true;
         }
       }
     </script>
