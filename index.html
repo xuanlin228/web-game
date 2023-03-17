@@ -17,7 +17,13 @@
     <link href="index.css" rel="stylesheet" />
   </head>
 
-  <body onload="startGame()">
+  <body onload="mainMenu()">
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"
+      integrity="sha512-Mf/xUqfWvDIr+1B6zfnIDIiG7XHzyP/guXUWgV6PgaQoIFeXkJQR5XWh9fqAiCiRCpemabt3naV4jhDWVnuYDQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -28,12 +34,20 @@
       integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
       crossorigin="anonymous"
     ></script>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-    <!-- <div class="ratio ratio-4x3"> -->
+    <div id="menu">
+      <div id="main">
+        <a href="javascript:void(0)" class="button play">Game Start</a>
+      </div>
+    </div>
     <div class="canvas-wrap">
       <canvas class="cover-fit" id="myCanvas"></canvas>
     </div>
-    <!-- </div> -->
+    <div id="game-over">
+      <h2>You ran <span id="score"></span> meters!</h2>
+      <a href="javascript:void(0)" class="button restart">Try again?</a>
+    </div>
     <script>
       var myGamePiece;
       var myBackground;
@@ -65,8 +79,8 @@
       }
       function startGame() {
         myGamePieceCheng = new component(
-          100,
-          100,
+          75,
+          75,
           "img/CH_cheng.png",
           gamecanvasWidth / 2,
           gamecanvasHeight - 100,
@@ -98,10 +112,10 @@
         );
 
         myGameStar1 = new component(
-          50,
-          50,
+          25,
+          25,
           "img/icon_s.png",
-          shift + gamecanvasWidth - 150,
+          shift + 50,
           0,
           "image",
           0,
@@ -109,10 +123,10 @@
         );
         liveStars.push(myGameStar1);
         myGameStar2 = new component(
-          50,
-          50,
+          25,
+          25,
           "img/icon_s.png",
-          shift + gamecanvasWidth - 100,
+          shift + 75,
           0,
           "image",
           0,
@@ -120,10 +134,10 @@
         );
         liveStars.push(myGameStar2);
         myGameStar3 = new component(
-          50,
-          50,
+          25,
+          25,
           "img/icon_s.png",
-          shift + gamecanvasWidth - 50,
+          shift + 100,
           0,
           "image",
           0,
@@ -260,14 +274,19 @@
         }
 
         myGameTimer.update();
+        // ctx.save();
+        // ctx.fillStyle = "black";
+        // ctx.globalAlpha = overlay.opacity;
+        // ctx.fillRect(0, 0, gamecanvasWidth, gamecanvasHeight);
+        // ctx.restore();
       }
 
       function dropDio() {
         //將dropDio的interval改成70
         //while (dios.length < 6) {
         var myGamePieceDio = new component(
-          100,
-          100,
+          60,
+          60,
           "img/CH_DIO.png",
           random(shift, shift + gamecanvasWidth - 125), //position of x coor
           50,
@@ -348,6 +367,31 @@
           return true;
         }
       }
+      function mainMenu() {
+        menu = document.getElementById("menu");
+        let root = document.documentElement; //選取root
+        root.style.setProperty("--bgwidth", gamecanvasWidth);
+        root.style.setProperty("--bgheight", gamecanvasHeight);
+        root.style.setProperty("--shift", shift);
+        main = document.getElementById("main");
+        main.style.backgroundImage = "url('img/bg.jpg')";
+        // menu.style.backgroundPosition = "0 0";
+        main.style.display = "block";
+        document.getElementById("menu").setAttribute("class", "main");
+        // $("#main").show();
+        // $("#menu").addClass("main");
+      }
+      function gameOver() {
+        
+      }
+      $(".play").click(function () {
+        $("#menu").hide();
+        startGame();
+      });
+      $(".restart").click(function () {
+        $("#game-over").hide();
+        startGame();
+      });
     </script>
   </body>
 </html>

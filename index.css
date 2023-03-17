@@ -1,3 +1,8 @@
+:root {
+  --bgwidth: 640px;
+  --bgheight: 360px;
+  --shift: 0px;
+}
 body {
   margin: 0 auto;
   width: 100vw;
@@ -5,17 +10,75 @@ body {
   text-align: center;
 }
 
-/* .canvas-wrap {
+#menu {
+  /* display: none; */
+  width: calc(var(--bgwidth) * 1px);
+  height: calc(var(--bgheight) * 1px);
+}
+#menu.main {
+  width: calc(var(--bgwidth) * 1px);
+  height: calc(var(--bgheight) * 1px);
+}
+#main {
+  background-size: cover;
+  height: calc(var(--bgheight) * 1px);
+  width: calc(var(--bgwidth) * 1px);
+  position: absolute;
+  top: var(--bgheight) / 2;
+  left: calc(var(--shift) * 1px);
+  text-decoration: none;
+}
+.button {
   display: block;
-  margin: auto;
-  height: auto;
-} */
-
-/* .cover-fit {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}  */
+  width: var(--bgwidth);
+  margin: 0 auto;
+  height: 75px;
+  line-height: 60px;
+  text-decoration: none;
+  font-family: cursive;
+  font-weight: bold;
+  font-size: x-large;
+  letter-spacing: 10px;
+  word-spacing: 15px;
+  border: 1px solid hsla(0, 0%, 5%, 0);
+  color: white;
+  font-weight: bold;
+  /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000; */
+  background-color: hsla(60, 2%, 8%, 0.485);
+  background-image: -webkit-linear-gradient(
+    bottom,
+    hsla(60, 2%, 8%, 0.485) 0%,
+    hsla(60, 2%, 8%, 0.485) 100%
+  );
+  background-image: linear-gradient(
+    to bottom,
+    hsla(60, 2%, 8%, 0.485) 0%,
+    hsla(60, 2%, 8%, 0.485) 100%
+  );
+  border-radius: 5px;
+  position: relative;
+  top: calc(var(--bgheight) / 2 * 1px);
+}
+.button:hover {
+  color: rgb(243, 220, 190);
+  background-color: #5c595a65;
+  background-image: -webkit-linear-gradient(
+    bottom,
+    #757575c6 0%,
+    #757575c6 100%
+  );
+  background-image: linear-gradient(to bottom, #757575c6 0%, #757575c6 100%);
+}
+#game-over {
+  display: none;
+  text-align: center;
+  padding-top: 92px;
+  z-index: 1;
+  width: 600px;
+  height: 360px;
+  position: absolute;
+}
 
 @keyframes move {
   0% {
