@@ -102,13 +102,13 @@ var myGameArea = {
   start: function () {
     this.canvas.width = gamecanvasWidth;
     this.canvas.height = gamecanvasHeight;
+    this.sec = 30;
     this.context = this.canvas.getContext("2d");
     window.addEventListener("click", function (e) {
       removeDio(e);
     });
     this.x = 0;
     this.y = 0;
-    this.sec = 30;
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     this.frameNo = 0;
     this.interval = setInterval(updateGameArea, 20);
@@ -226,11 +226,7 @@ function updateGameArea() {
   }
 
   myGameTimer.update();
-  // ctx.save();
-  // ctx.fillStyle = "black";
-  // ctx.globalAlpha = overlay.opacity;
-  // ctx.fillRect(0, 0, gamecanvasWidth, gamecanvasHeight);
-  // ctx.restore();
+  ctx.save();
 }
 
 function dropDio() {
@@ -352,5 +348,11 @@ $(".restart").click(function () {
 });
 $(".leave").click(function () {
   $("#game-over").hide();
-  startGame();
+  ctx = myGameArea.context;
+  ctx.fillStyle = "black";
+  ctx.globalAlpha = 1;
+  ctx.fillRect(0, 0, gamecanvasWidth, gamecanvasHeight);
+  // ctx.save();
+  ctx.restore();
+  // startGame();
 });
