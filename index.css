@@ -44,8 +44,6 @@ body {
   border: 1px solid hsla(0, 0%, 5%, 0);
   color: white;
   font-weight: bold;
-  /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000; */
   background-color: hsla(60, 2%, 8%, 0.485);
   background-image: -webkit-linear-gradient(
     bottom,
@@ -72,11 +70,44 @@ body {
   background-image: linear-gradient(to bottom, #757575c6 0%, #757575c6 100%);
 }
 #game-over {
-  display: var(--display);
+  display: none;
   width: calc(var(--bgwidth) * 1px);
   height: calc(var(--bgheight) * 1px);
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: calc(var(--shift) * 1px);
 }
-
+.endbutton {
+  background-color: rgb(247, 203, 24);
+  color: black;
+  font-size: 25px;
+  font-family: cursive;
+  border-radius: 5px;
+  border: none;
+  margin-left: 5px;
+}
+.endbutton:hover {
+  background-color: rgb(247, 162, 24);
+  color: rgb(255, 255, 255);
+  font-size: 25px;
+  font-family: cursive;
+  border-radius: 5px;
+  border: none;
+  margin-left: 5px;
+}
+.textGameOver {
+  color: rgb(255, 255, 255);
+  font-family: cursive;
+  font-weight: bold;
+  font-size: x-large;
+  letter-spacing: 10px;
+  word-spacing: 15px;
+  background-color: hsla(60, 2%, 8%, 0.667);
+  position: relative;
+  top: calc(var(--bgheight) / 2 * 1px);
+  height: 45px;
+}
 @keyframes move {
   0% {
     transform: translate(var(--x-position), var(--y-position));
