@@ -174,57 +174,59 @@ var myGameArea = {
     clearInterval(this.interval);
   },
 };
-
-function component(width, height, color, x, y, type, speedx, speedy) {
-  this.type = type;
-  if (type == "image") {
-    this.image = new Image();
-    this.image.src = color;
-  }
-  if (type == "text") {
-    this.text = "" + myGameArea.sec;
-    console.log("myGameArea.sec: " + myGameArea.sec);
-  }
-  if (type == "dio") {
-    this.image = new Image();
-    this.image.src = color;
-  }
-
-  this.width = width;
-  this.height = height;
-  this.speedX = speedx;
-  this.speedY = speedy;
-  this.x = x;
-  this.y = y;
-  this.click = false;
-  this.update = function () {
-    ctx = myGameArea.context;
+class component {
+  constructor(width, height, color, x, y, type, speedx, speedy) {
+    this.type = type;
     if (type == "image") {
-      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    } else if (this.type == "text") {
-      ctx.font = this.width + " " + this.height;
-      ctx.fillStyle = color;
-      ctx.fillText(this.text, this.x, this.y);
-    } else {
-      ctx.fillStyle = color;
-      ctx.fillRect(this.x, this.y, this.width, this.height);
+      this.image = new Image();
+      this.image.src = color;
     }
-  };
-  this.newPos = function () {
-    ctx = myGameArea.context;
-    if (this.x + 125 > gamecanvasWidth + shift) {
-      this.speedX = -this.speedX;
-      // ctx.translate((700 + this.width),0);
-      // ctx.scale(-1,1);
+    if (type == "text") {
+      this.text = "" + myGameArea.sec;
+      console.log("myGameArea.sec: " + myGameArea.sec);
     }
-    if (this.x < shift) {
-      this.speedX = -this.speedX;
+    if (type == "dio") {
+      this.image = new Image();
+      this.image.src = color;
     }
 
-    this.x += this.speedX;
-    this.y += this.speedY;
-  };
+    this.width = width;
+    this.height = height;
+    this.speedX = speedx;
+    this.speedY = speedy;
+    this.x = x;
+    this.y = y;
+    this.click = false;
+    this.update = function () {
+      ctx = myGameArea.context;
+      if (type == "image") {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      } else if (this.type == "text") {
+        ctx.font = this.width + " " + this.height;
+        ctx.fillStyle = color;
+        ctx.fillText(this.text, this.x, this.y);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+    };
+    this.newPos = function () {
+      ctx = myGameArea.context;
+      if (this.x + 125 > gamecanvasWidth + shift) {
+        this.speedX = -this.speedX;
+        // ctx.translate((700 + this.width),0);
+        // ctx.scale(-1,1);
+      }
+      if (this.x < shift) {
+        this.speedX = -this.speedX;
+      }
+
+      this.x += this.speedX;
+      this.y += this.speedY;
+    };
+  }
 }
+
 class sound {
   constructor(src) {
     this.sound = document.createElement("audio");
