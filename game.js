@@ -26,6 +26,58 @@ if (gamecanvasWidth < screenWidth) {
   gamecanvasWidth = screenWidth;
   gamecanvasHeight = screenWidth * (1 / whratio);
 }
+var imgLoader = {
+  imgs: {
+    'bg': 'img/bg.jpg',
+    'cheng': 'img/CH_cheng.png',
+    'dio': 'img/CH_DIO.png',
+    'flower': 'img/flower.png',
+    'star': 'img/icon_s.png'
+  },
+  setting: function () {
+    this.imgLoaded = 0;
+    this.numImgs = Object.keys(this.imgs).length;
+    this.totalImgs = this.numImgs;
+  },
+  downloadAll: function () {
+    var src = "";
+    var finished = true;
+    var _this = this;
+    for (const [img, value] of Object.entries(_this.imgs)) {
+      console.log("img: " + _this.imgs[img]);
+      src = _this.imgs[img];
+      _this.imgs[img] = new Image();
+      _this.imgs[img].status = 'loading';
+      console.log("status: " + _this.imgs[img].status);
+      _this.imgs[img].name = img;
+      _this.imgs[img].onload = function () {
+
+        if (_this.imgs[img].status === "loading") {
+          _this.imgs[img].status = "loaded";
+
+        }
+        console.log("imgLoaded: " + _this.imgs[img].status);
+      }
+      _this.imgs[img].src = src;
+
+    }
+    for (const [img, value] of Object.entries(this.imgs)) {
+      if (this.imgs[img].status === "loading") {
+        finished = false;
+        return finished;
+      }
+    }
+    return finished;
+  }
+}
+
+
+let finish = imgLoader.downloadAll();
+if (finish) {
+  mainMenu();
+}
+// mainMenu();
+
 function startGame() {
   myGamePieceCheng = new component(
     75,
@@ -102,7 +154,7 @@ var myGameArea = {
   start: function () {
     this.canvas.width = gamecanvasWidth;
     this.canvas.height = gamecanvasHeight;
-    this.sec = 30;
+    this.sec = sec;
     this.context = this.canvas.getContext("2d");
     window.addEventListener("click", function (e) {
       removeDio(e);
@@ -129,6 +181,7 @@ function component(width, height, color, x, y, type, speedx, speedy) {
   }
   if (type == "text") {
     this.text = "" + myGameArea.sec;
+    console.log("myGameArea.sec: " + myGameArea.sec);
   }
   if (type == "dio") {
     this.image = new Image();
@@ -226,7 +279,6 @@ function updateGameArea() {
   }
 
   myGameTimer.update();
-  ctx.save();
 }
 
 function dropDio() {
@@ -324,7 +376,7 @@ function mainMenu() {
   root.style.setProperty("--shift", shift);
   let main = document.getElementById("main");
   main.style.backgroundImage = "url('img/bg.jpg')";
-  main.style.display = "block";
+  // main.style.display = "block";
   document.getElementById("menu").setAttribute("class", "main");
 }
 function gameOver() {
@@ -335,8 +387,7 @@ function gameOver() {
   root.style.setProperty("--shift", shift);
   root.style.setProperty("--display", "block");
   // gameoverMenu.style.backgroundImage = "url('img/bg.jpg')";
-  gameoverMenu.show();
-
+  gameoverMenu.style.display = "block";
 }
 $(".play").click(function () {
   $("#menu").hide();
@@ -349,10 +400,42 @@ $(".restart").click(function () {
 $(".leave").click(function () {
   $("#game-over").hide();
   ctx = myGameArea.context;
-  ctx.fillStyle = "black";
+  // ctx.fillStyle = "black";
+  ctx.save();
   ctx.globalAlpha = 1;
-  ctx.fillRect(0, 0, gamecanvasWidth, gamecanvasHeight);
-  // ctx.save();
+  myGamePieceChenEnd = new component(
+    75,
+    75,
+    "img/CH_cheng.png",
+    0,
+    gamecanvasHeight - 200,
+    "image",
+    0,
+    0
+  );
+  myGamePieceFlowerEnd = new component(
+    125,
+    125,
+    "img/flower.png",
+    gamecanvasWidth / 2,
+    gamecanvasHeight - 200,
+    "image",
+    0,
+    0
+  );
+  text = new component(
+    75,
+    75,
+    "img/flower.png",
+    gamecanvasWidth / 2,
+    gamecanvasHeight - 200,
+    "image",
+    0,
+    0
+  );
+  myBackground.update();
+  // myGamePieceChenEnd.update();
+  text.update();
   ctx.restore();
-  // startGame();
 });
+
