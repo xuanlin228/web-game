@@ -14,6 +14,7 @@ var screenHeight = window.innerHeight;
 var gamecanvasWidth = screenWidth;
 var gamecanvasHeight = screenHeight;
 var shift = 0;
+var myMusic;
 
 if (screenHeight > screenWidth) {
   gamecanvasHeight = screenWidth * (1 / whratio);
@@ -28,13 +29,14 @@ if (gamecanvasWidth < screenWidth) {
 }
 var imgLoader = {
   imgs: {
-    'bg': 'img/bg.jpg',
-    'cheng': 'img/CH_cheng.png',
-    'dio': 'img/CH_DIO.png',
-    'flower': 'img/flower.png',
+    'bg': 'img/minigame_bg.jpg',
+    'cheng': 'img/Jotaro_stand_125.png',
+    'dio': 'img/Dio_stand_125.png',
+    'flower': 'img/Kakyoin_stand_225.png',
     'star': 'img/icon_s.png',
-    'state': 'img/state.png',
-    'off': 'img/off.png'
+    'Jotaro_stand_225': 'img/Jotaro_stand_225.png',
+    'dialog_J': 'img/dialog_J.png',
+    'dialog_K': 'img/dialog_K.png'
   },
   setting: function () {
     this.imgLoaded = 0;
@@ -81,7 +83,7 @@ function startGame() {
   myGamePieceCheng = new component(
     75,
     75,
-    "img/CH_cheng.png",
+    "img/Jotaro_stand_125.png",
     gamecanvasWidth / 2,
     gamecanvasHeight - 100,
     "image",
@@ -92,7 +94,7 @@ function startGame() {
   myBackground = new component(
     gamecanvasWidth,
     gamecanvasHeight,
-    "img/bg.jpg",
+    "img/minigame_bg.jpg",
     shift,
     0,
     "image",
@@ -144,7 +146,6 @@ function startGame() {
     0
   );
   liveStars.push(myGameStar3);
-
   myGameArea.start();
 }
 
@@ -222,7 +223,6 @@ function component(width, height, color, x, y, type, speedx, speedy) {
     this.y += this.speedY;
   };
 }
-
 function updateGameArea() {
   ctx = myGameArea.context;
   if (myGameArea.sec == 0 || liveStars.length == 0) {
@@ -246,9 +246,9 @@ function updateGameArea() {
     }
   }
   if (myGameArea.frameNo == 1 || everyinterval(70)) {
-    while (dios.length < 2) {
-      dropDio();
-    }
+    // while (dios.length < 2) {
+    dropDio();
+    // }
   }
   for (i = 0; i < dios.length; i++) {
     if (collision(dios[i], myGamePieceCheng)) {
@@ -263,10 +263,11 @@ function updateGameArea() {
   for (i = 0; i < dios.length; i++) {
     if (dios[i].y > myGamePieceCheng.y + myGamePieceCheng.height / 2) {
       temp = i;
-      break;
+      dios[i].speedY = 0;
+      // break;
     }
   }
-  dios.splice(temp, 1);
+  // dios.splice(temp, 1);
   /*-----------------------------------------------*/
   for (i = 0; i < dios.length; i++) {
     dios[i].newPos();
@@ -286,7 +287,7 @@ function dropDio() {
   var myGamePieceDio = new component(
     60,
     60,
-    "img/CH_DIO.png",
+    "img/Dio_stand_125.png",
     random(shift, shift + gamecanvasWidth - 125), //position of x coor
     50,
     "image",
@@ -374,7 +375,7 @@ function mainMenu() {
   root.style.setProperty("--bgheight", gamecanvasHeight);
   root.style.setProperty("--shift", shift);
   let main = document.getElementById("main");
-  main.style.backgroundImage = "url('img/bg.jpg')";
+  main.style.backgroundImage = "url('img/minigame_bg.jpg')";
   main.style.display = "block";
   document.getElementById("menu").setAttribute("class", "main");
 }
@@ -385,7 +386,7 @@ function gameOver() {
   root.style.setProperty("--bgheight", gamecanvasHeight);
   root.style.setProperty("--shift", shift);
   root.style.setProperty("--display", "block");
-  // gameoverMenu.style.backgroundImage = "url('img/bg.jpg')";
+  // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameoverMenu.style.display = "block";
 }
 $(".play").click(function () {
@@ -403,38 +404,50 @@ $(".leave").click(function () {
   ctx.save();
   ctx.globalAlpha = 1;
   myGamePieceChenEnd = new component(
-    75,
-    75,
-    "img/CH_cheng.png",
-    0,
-    gamecanvasHeight - 200,
+    175,
+    175,
+    "img/Jotaro_stand_225.png",
+    (shift + gamecanvasWidth) / 2 - 160,
+    100,
     "image",
     0,
     0
   );
-  myGamePieceFlowerEnd = new component(
-    125,
-    125,
-    "img/flower.png",
-    gamecanvasWidth / 2,
-    gamecanvasHeight - 200,
+  myGamePieceKakyoinEnd = new component(
+    175,
+    175,
+    "img/Kakyoin_stand_225.png",
+    (shift + gamecanvasWidth) / 2,
+    100,
     "image",
     0,
     0
   );
-  text = new component(
-    75,
-    75,
-    "img/off.png",
-    gamecanvasWidth / 2,
-    gamecanvasHeight - 200,
+  jotaroDialog = new component(
+    150,
+    100,
+    "img/dialog_J.png",
+    (shift + gamecanvasWidth) / 2 - 240,
+    100,
+    "image",
+    0,
+    0
+  );
+  kalyoinDialog = new component(
+    150,
+    100,
+    "img/dialog_K.png",
+    (shift + gamecanvasWidth) / 2 + 150,
+    100,
     "image",
     0,
     0
   );
   myBackground.update();
-  // myGamePieceChenEnd.update();
-  myGamePieceFlowerEnd.update();
+  myGamePieceChenEnd.update();
+  myGamePieceKakyoinEnd.update();
+  jotaroDialog.update();
+  kalyoinDialog.update();
   ctx.restore();
 });
 
