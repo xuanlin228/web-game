@@ -32,7 +32,9 @@ var imgLoader = {
     'cheng': 'img/CH_cheng.png',
     'dio': 'img/CH_DIO.png',
     'flower': 'img/flower.png',
-    'star': 'img/icon_s.png'
+    'star': 'img/icon_s.png',
+    'state': 'img/state.png',
+    'off': 'img/off.png'
   },
   setting: function () {
     this.imgLoaded = 0;
@@ -61,21 +63,18 @@ var imgLoader = {
       _this.imgs[img].src = src;
 
     }
-    for (const [img, value] of Object.entries(this.imgs)) {
-      if (this.imgs[img].status === "loading") {
-        finished = false;
-        return finished;
-      }
-    }
     return finished;
   }
 }
 
-
-let finish = imgLoader.downloadAll();
-if (finish) {
-  mainMenu();
+function main() {
+  let finish = imgLoader.downloadAll();
+  console.log("finish: " + finish);
+  if (finish) {
+    mainMenu();
+  }
 }
+
 // mainMenu();
 
 function startGame() {
@@ -376,7 +375,7 @@ function mainMenu() {
   root.style.setProperty("--shift", shift);
   let main = document.getElementById("main");
   main.style.backgroundImage = "url('img/bg.jpg')";
-  // main.style.display = "block";
+  main.style.display = "block";
   document.getElementById("menu").setAttribute("class", "main");
 }
 function gameOver() {
@@ -426,7 +425,7 @@ $(".leave").click(function () {
   text = new component(
     75,
     75,
-    "img/flower.png",
+    "img/off.png",
     gamecanvasWidth / 2,
     gamecanvasHeight - 200,
     "image",
@@ -435,7 +434,7 @@ $(".leave").click(function () {
   );
   myBackground.update();
   // myGamePieceChenEnd.update();
-  text.update();
+  myGamePieceFlowerEnd.update();
   ctx.restore();
 });
 
