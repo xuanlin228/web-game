@@ -146,6 +146,8 @@ function startGame() {
     0
   );
   liveStars.push(myGameStar3);
+  myMusic = new sound("music/bgm.mp3");
+  myMusic.play();
   myGameArea.start();
 }
 
@@ -223,10 +225,28 @@ function component(width, height, color, x, y, type, speedx, speedy) {
     this.y += this.speedY;
   };
 }
+class sound {
+  constructor(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.volume = 0.5;
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function () {
+      this.sound.play();
+    };
+    this.stop = function () {
+      this.sound.pause();
+    };
+  }
+}
 function updateGameArea() {
   ctx = myGameArea.context;
   if (myGameArea.sec == 0 || liveStars.length == 0) {
     myGameArea.stop();
+    myMusic.stop();
     $("#game-over").show();
     gameOver();
   }
@@ -396,6 +416,7 @@ $(".play").click(function () {
 $(".restart").click(function () {
   $("#game-over").hide();
   window.location.reload();
+
 });
 $(".leave").click(function () {
   $("#game-over").hide();
