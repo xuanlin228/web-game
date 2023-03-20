@@ -86,12 +86,13 @@ function startGame() {
   let bgsize = cover(gamecanvasWidth, gamecanvasHeight);
   let bgwidth = bgsize.bgwidth;
   let bgheight = bgsize.bgheight;
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth);
   myGamePieceCheng = new component(
-    75,
-    75,
+    size,
+    size,
     "img/Jotaro_stand_125.png",
     gamecanvasWidth / 2,
-    gamecanvasHeight - 100,
+    gamecanvasHeight - size,
     "image",
     5,
     0
@@ -202,6 +203,10 @@ function cover(gamecanvasWidth, gamecanvasHeight) {
   }
   return { bgwidth, bgheight }
 }
+function characterSize(gamecanvasHeight, gamecanvasWidth) {
+  let size = 125 * (Math.min(gamecanvasHeight, gamecanvasWidth) / 375);
+  return size;
+}
 class component {
   constructor(width, height, color, x, y, type, speedx, speedy) {
     this.type = type;
@@ -250,7 +255,7 @@ class component {
     };
     this.newPos = function () {
       ctx = myGameArea.context;
-      if (this.x + 125 > gamecanvasWidth + shift) {
+      if (this.x + 75 > gamecanvasWidth + shift) {
         this.speedX = -this.speedX;
         // ctx.translate((700 + this.width),0);
         // ctx.scale(-1,1);
@@ -321,7 +326,7 @@ function updateGameArea() {
   /*-----------------------------------------------*/
   var temp = 100;
   for (i = 0; i < dios.length; i++) {
-    if (dios[i].y > myGamePieceCheng.y + myGamePieceCheng.height / 2) {
+    if (dios[i].y > myGamePieceCheng.y) {
       temp = i;
       dios[i].speedY = 0;
       // break;
@@ -344,11 +349,12 @@ function updateGameArea() {
 function dropDio() {
   //將dropDio的interval改成70
   //while (dios.length < 6) {
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth);
   var myGamePieceDio = new component(
-    60,
-    60,
+    size,
+    size,
     "img/Dio_stand_125.png",
-    random(shift, shift + gamecanvasWidth - 125), //position of x coor
+    random(shift, shift + gamecanvasWidth - size), //position of x coor
     50,
     "image",
     0,
