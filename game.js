@@ -15,18 +15,22 @@ var gamecanvasWidth = screenWidth;
 var gamecanvasHeight = screenHeight;
 var shift = 0;
 var myMusic;
+// var bgwidth = gamecanvasWidth;
+// var bgheight = gamecanvasHeight;
 
-if (screenHeight > screenWidth) {
-  gamecanvasHeight = screenWidth * (1 / whratio);
-} else {
-  gamecanvasWidth = screenHeight * whratio;
-}
-if (gamecanvasWidth < screenWidth) {
-  shift = screenWidth / 2 - gamecanvasWidth / 2;
-} else if (gamecanvasWidth > screenWidth) {
-  gamecanvasWidth = screenWidth;
-  gamecanvasHeight = screenWidth * (1 / whratio);
-}
+// if (screenHeight > screenWidth) {
+//   gamecanvasHeight = screenWidth * (1 / whratio);
+// } else {
+//   gamecanvasWidth = screenHeight * whratio;
+// }
+// if (gamecanvasWidth < screenWidth) {
+//   shift = screenWidth / 2 - gamecanvasWidth / 2;
+// } else if (gamecanvasWidth > screenWidth) {
+//   gamecanvasWidth = screenWidth;
+//   gamecanvasHeight = screenWidth * (1 / whratio);
+// }
+
+
 var imgLoader = {
   imgs: {
     'bg': 'img/minigame_bg.jpg',
@@ -77,9 +81,11 @@ function main() {
   }
 }
 
-// mainMenu();
 
 function startGame() {
+  let bgsize = cover(gamecanvasWidth, gamecanvasHeight);
+  let bgwidth = bgsize.bgwidth;
+  let bgheight = bgsize.bgheight;
   myGamePieceCheng = new component(
     75,
     75,
@@ -92,8 +98,8 @@ function startGame() {
   );
 
   myBackground = new component(
-    gamecanvasWidth,
-    gamecanvasHeight,
+    bgwidth,
+    bgheight,
     "img/minigame_bg.jpg",
     shift,
     0,
@@ -117,7 +123,7 @@ function startGame() {
     25,
     25,
     "img/icon_s.png",
-    shift + 50,
+    shift + 5,
     0,
     "image",
     0,
@@ -128,7 +134,7 @@ function startGame() {
     25,
     25,
     "img/icon_s.png",
-    shift + 75,
+    shift + 30,
     0,
     "image",
     0,
@@ -139,7 +145,7 @@ function startGame() {
     25,
     25,
     "img/icon_s.png",
-    shift + 100,
+    shift + 55,
     0,
     "image",
     0,
@@ -156,7 +162,7 @@ var myGameArea = {
   start: function () {
     this.canvas.width = gamecanvasWidth;
     this.canvas.height = gamecanvasHeight;
-    myGameArea.sec = 30;
+    sec = 30;
     this.context = this.canvas.getContext("2d");
     window.addEventListener("click", function (e) {
       removeDio(e);
@@ -181,6 +187,21 @@ var myGameArea = {
     clearInterval(this.interval);
   },
 };
+function cover(gamecanvasWidth, gamecanvasHeight) {
+  canvaRatio = gamecanvasWidth / gamecanvasHeight;
+  imgRatio = 3507 / 2480;
+  let bgheight = 0;
+  let bgwidth = 0;
+  if (imgRatio > canvaRatio) {
+    bgheight = gamecanvasHeight;
+    bgwidth = imgRatio * gamecanvasHeight;
+  } else {
+
+    bgwidth = gamecanvasWidth;
+    bgheight = gamecanvasWidth / imgRatio;
+  }
+  return { bgwidth, bgheight }
+}
 class component {
   constructor(width, height, color, x, y, type, speedx, speedy) {
     this.type = type;
@@ -189,8 +210,8 @@ class component {
       this.image.src = color;
     }
     if (type == "text") {
-      this.text = "" + myGameArea.sec;
-      console.log("myGameArea.sec: " + myGameArea.sec);
+      this.text = "" + sec;
+      console.log("sec: " + sec);
     }
     if (type == "dio") {
       this.image = new Image();
@@ -210,8 +231,18 @@ class component {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
       } else if (this.type == "text") {
         ctx.font = this.width + " " + this.height;
-        ctx.fillStyle = color;
-        ctx.fillText(this.text, this.x, this.y);
+        ctx.textBaseline = "middle";
+        // ctx.fillStyle = color;
+        var width = ctx.measureText(this.text).width;
+        // console.log("font width: " + width);
+        ctx.beginPath();
+        ctx.arc(gamecanvasWidth - (width + 20) / 2, (parseInt(ctx.font, 10) + 20) / 2, Math.min(width + 20, parseInt(ctx.font, 10) + 20) / 2, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = "black";
+        ctx.fill();
+        // ctx.fillRect(x, y, width + 20, parseInt(ctx.font, 10) + 20);
+        ctx.fillStyle = 'white';
+        ctx.fillText(this.text, gamecanvasWidth - (width + 10), (parseInt(ctx.font, 10) + 20) / 2);
       } else {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -253,7 +284,7 @@ class sound {
 }
 function updateGameArea() {
   ctx = myGameArea.context;
-  if (myGameArea.sec == 0 || liveStars.length == 0) {
+  if (sec == 0 || liveStars.length == 0) {
     myGameArea.stop();
     myMusic.stop();
     $("#game-over").show();
@@ -267,11 +298,11 @@ function updateGameArea() {
   myGamePieceCheng.update();
   myGameArea.frameNo += 1;
   if (everyinterval(50)) {
-    myGameArea.sec--;
-    if (myGameArea.sec < 10) {
-      myGameTimer.text = "0" + myGameArea.sec;
+    sec--;
+    if (sec < 10) {
+      myGameTimer.text = "0" + sec;
     } else {
-      myGameTimer.text = "" + myGameArea.sec;
+      myGameTimer.text = "" + sec;
     }
   }
   if (myGameArea.frameNo == 1 || everyinterval(70)) {
@@ -376,6 +407,7 @@ function removeDio(e) {
     }
   }
 }
+
 function collision(dio, cheng) {
   var dioleft = dio.x;
   var dioright = dio.x + dio.width;
