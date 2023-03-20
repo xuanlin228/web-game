@@ -156,11 +156,18 @@ var myGameArea = {
   start: function () {
     this.canvas.width = gamecanvasWidth;
     this.canvas.height = gamecanvasHeight;
-    this.sec = sec;
+    myGameArea.sec = 30;
     this.context = this.canvas.getContext("2d");
     window.addEventListener("click", function (e) {
       removeDio(e);
     });
+    window.addEventListener('touchstart', function (e) {
+      removeDio(e);
+    })
+    window.addEventListener('touchend', function (e) {
+      myGameArea.x = 0;
+      myGameArea.y = 0;
+    })
     this.x = 0;
     this.y = 0;
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);

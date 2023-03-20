@@ -97,6 +97,7 @@ body {
   margin-left: 5px;
 }
 .textGameOver {
+  /* width: var(--bgwidth); */
   color: rgb(255, 255, 255);
   font-family: cursive;
   font-weight: bold;
@@ -106,7 +107,8 @@ body {
   background-color: hsla(60, 2%, 8%, 0.667);
   position: relative;
   top: calc(var(--bgheight) / 2 * 1px);
-  height: 45px;
+  left: calc(var(--shift) * 1px);
+  /* height: 45px; */
 }
 @keyframes move {
   0% {
