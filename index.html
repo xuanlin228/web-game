@@ -148,7 +148,14 @@
         };
       }
 
+      function testing_click(){
+        return function(){
+          console.log("element clicked!!!")
+        };
+      }
+
       function updateGameArea() {
+
         ctx = myGameArea.context;
         if (sec == 0) {
           myGameArea.stop();
@@ -174,18 +181,21 @@
             dropDio();
           }
         }
+        for(i = 0; i < dios.length; i++){
+          dios[i].addEventListener("click", testing_click)
+        }
         /*將超過畫面的dio消除至於此instead of Component*/
         /*-----------------------------------------------*/
-        var temp = 100;
         for(i = 0; i < dios.length; i++){
           if(dios[i].y > 500){
-            temp = i;
-            break;
+            dios.splice(i, 1);
           }
         }
-        dios.splice(temp, 1);
+        
+        //myGamePieceDio.setAttribute("onclick", myGamePieceDio.remove())
+        
         /*-----------------------------------------------*/
-        for (i = 0; i < dios.length; i++) {
+        for (i = 0; i < dios.length; i++) { 
           dios[i].newPos();
           dios[i].update();
         }
@@ -206,6 +216,8 @@
           0,
           random(4, 8)   //speed of falling
         );
+        //myGamePieceDio.onclick = function(){alert('blah')};
+        //myGamePieceDio.addEventListener("onclick", function(){alert("umm")});
         dios.push(myGamePieceDio);
         //}
       }
@@ -221,7 +233,7 @@
         return num;
       }
 
-      function everyinterval(n) {
+      function everyinterval(n) { 
         if ((myGameArea.frameNo / n) % 1 == 0) {
           return true;
         }
