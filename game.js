@@ -168,9 +168,7 @@ var myGameArea = {
     // window.addEventListener("click", function (e) {
     //   removeDio(e);
     // });
-    window.addEventListener('touchstart', function (e) {
-      removeDio(e);
-    });
+    window.addEventListener('touchstart', removeDio);
     window.addEventListener('touchend', function (e) {
       myGameArea.x = 0;
       myGameArea.y = 0;
@@ -384,8 +382,8 @@ function everyinterval(n) {
 function removeDio(e) {
   // myGameArea.x = e.offsetX;
   // myGameArea.y = e.offsetY;
-  myGameArea.x = e.touches[0].offsetX;
-  myGameArea.y = e.touches[0].offsetY;
+  myGameArea.x = e.touches[0].clientX;
+  myGameArea.y = e.touches[0].clientY;
   console.log(
     "offsetX: " + myGameArea.x + " " + "offsetY: " + myGameArea.y
   );
