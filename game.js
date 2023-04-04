@@ -165,12 +165,12 @@ var myGameArea = {
     this.canvas.height = gamecanvasHeight;
     sec = 30;
     this.context = this.canvas.getContext("2d");
-    window.addEventListener("click", function (e) {
-      removeDio(e);
-    });
+    // window.addEventListener("click", function (e) {
+    //   removeDio(e);
+    // });
     window.addEventListener('touchstart', function (e) {
       removeDio(e);
-    })
+    });
     window.addEventListener('touchend', function (e) {
       myGameArea.x = 0;
       myGameArea.y = 0;
@@ -382,8 +382,10 @@ function everyinterval(n) {
   return false;
 }
 function removeDio(e) {
-  myGameArea.x = e.offsetX;
-  myGameArea.y = e.offsetY;
+  // myGameArea.x = e.offsetX;
+  // myGameArea.y = e.offsetY;
+  yGameArea.x = e.touches[0].offsetX;
+  myGameArea.y = e.touches[0].offsetY;
   console.log(
     "offsetX: " + myGameArea.x + " " + "offsetY: " + myGameArea.y
   );
