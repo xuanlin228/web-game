@@ -166,7 +166,7 @@ var myGameArea = {
     sec = 30;
     this.context = this.canvas.getContext("2d");
     // window.addEventListener("click", function (e) {
-      // e.preventDefault();
+    // e.preventDefault();
     //   removeDio(e);
 
     // });
@@ -474,6 +474,8 @@ function gamclear() {
   root.style.setProperty("--display", "block");
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameclearrMenu.style.display = "block";
+  timeoutid = setTimeout(finalScene, 3000);
+  clearTimeout(timeoutid);
 }
 $(".play").click(function () {
   $("#menu").hide();
@@ -537,4 +539,58 @@ $(".leave").click(function () {
   kalyoinDialog.update();
   ctx.restore();
 });
+
+function finalScene() {
+  $("#game-clear").hide();
+  ctx = myGameArea.context;
+  // ctx.fillStyle = "black";
+  ctx.save();
+  ctx.globalAlpha = 1;
+  myGamePieceChenEnd = new component(
+    175,
+    175,
+    "img/Jotaro_stand_225.png",
+    (shift + gamecanvasWidth) / 2 - 160,
+    100,
+    "image",
+    0,
+    0
+  );
+  myGamePieceKakyoinEnd = new component(
+    175,
+    175,
+    "img/Kakyoin_stand_225.png",
+    (shift + gamecanvasWidth) / 2,
+    100,
+    "image",
+    0,
+    0
+  );
+  jotaroDialog = new component(
+    150,
+    100,
+    "img/dialog_J.png",
+    (shift + gamecanvasWidth) / 2 - 240,
+    100,
+    "image",
+    0,
+    0
+  );
+  kalyoinDialog = new component(
+    150,
+    100,
+    "img/dialog_K.png",
+    (shift + gamecanvasWidth) / 2 + 150,
+    100,
+    "image",
+    0,
+    0
+  );
+  myBackground.update();
+  myGamePieceChenEnd.update();
+  myGamePieceKakyoinEnd.update();
+  jotaroDialog.update();
+  kalyoinDialog.update();
+  ctx.restore();
+}
 
