@@ -166,7 +166,7 @@ var myGameArea = {
     sec = 30;
     this.context = this.canvas.getContext("2d");
     // window.addEventListener("click", function (e) {
-    //   e.preventDefault();
+      // e.preventDefault();
     //   removeDio(e);
 
     // });
