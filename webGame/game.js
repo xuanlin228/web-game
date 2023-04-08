@@ -465,7 +465,7 @@ function gameOver() {
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameoverMenu.style.display = "block";
 }
-function gamclear() {
+function gameclear() {
   gameclearrMenu = document.getElementById("game-clear");
   let root = document.documentElement; //選取root
   root.style.setProperty("--bgwidth", gamecanvasWidth);
