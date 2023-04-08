@@ -475,7 +475,7 @@ function gamclear() {
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameclearrMenu.style.display = "block";
   timeoutid = setTimeout(finalScene, 3000);
-  clearTimeout(timeoutid);
+  // clearTimeout(timeoutid);
 }
 $(".play").click(function () {
   $("#menu").hide();
