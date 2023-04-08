@@ -299,7 +299,7 @@ function updateGameArea() {
     myGameArea.stop();
     myMusic.stop();
     $("#game-clear").show();
-    gameClear();
+    gameclear();
   }
 
 
