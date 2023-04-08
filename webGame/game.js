@@ -289,12 +289,19 @@ class sound {
 }
 function updateGameArea() {
   ctx = myGameArea.context;
-  if (sec == 0 || liveStars.length == 0) {
+  if (liveStars.length == 0) {
     myGameArea.stop();
     myMusic.stop();
     $("#game-over").show();
     gameOver();
   }
+  if (sec == 0) {
+    myGameArea.stop();
+    myMusic.stop();
+    $("#game-clear").show();
+    gameClear();
+  }
+
 
   myGameArea.clear();
   myBackground.newPos();
@@ -457,6 +464,16 @@ function gameOver() {
   root.style.setProperty("--display", "block");
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameoverMenu.style.display = "block";
+}
+function gamclear() {
+  gameclearrMenu = document.getElementById("game-clear");
+  let root = document.documentElement; //選取root
+  root.style.setProperty("--bgwidth", gamecanvasWidth);
+  root.style.setProperty("--bgheight", gamecanvasHeight);
+  root.style.setProperty("--shift", shift);
+  root.style.setProperty("--display", "block");
+  // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
+  gameclearrMenu.style.display = "block";
 }
 $(".play").click(function () {
   $("#menu").hide();
