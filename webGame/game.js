@@ -168,7 +168,7 @@ var myGameArea = {
     // window.addEventListener("click", function (e) {
     //   e.preventDefault();
     //   removeDio(e);
-      
+
     // });
     window.addEventListener('touchstart', removeDio);
     window.addEventListener('touchend', function (e) {
@@ -311,9 +311,9 @@ function updateGameArea() {
     }
   }
   if (myGameArea.frameNo == 1 || everyinterval(70)) {
-    // while (dios.length < 2) {
-    dropDio();
-    // }
+    while (dios.length < 2) {
+      dropDio();
+    }
   }
   for (i = 0; i < dios.length; i++) {
     if (collision(dios[i], myGamePieceCheng)) {
