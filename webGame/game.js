@@ -14,6 +14,8 @@ var scaleratio = 1;
 // var gamecanvasWidth;
 // var gamecanvasHeight;
 // var shift;
+var deviceOrientation = window.screen.orientation.type;
+lock(deviceOrientation);
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
 var gamecanvasWidth = screenWidth;
@@ -65,12 +67,22 @@ var imgLoader = {
     return finished;
   }
 }
+function lock(orientation) {
+  // (A1) GO INTO FULL SCREEN FIRST
+  let de = document.documentElement;
+  if (de.requestFullscreen) { de.requestFullscreen(); }
+  else if (de.mozRequestFullScreen) { de.mozRequestFullScreen(); }
+  else if (de.webkitRequestFullscreen) { de.webkitRequestFullscreen(); }
+  else if (de.msRequestFullscreen) { de.msRequestFullscreen(); }
+
+  // (A2) THEN LOCK ORIENTATION
+  screen.orientation.lock(orientation);
+}
 
 function main() {
   let finish = imgLoader.downloadAll();
   console.log("finish: " + finish);
   if (finish) {
-    window.screen.orientation.lock("portrait");
     mainMenu();
   }
 }
