@@ -552,7 +552,7 @@ function finalScene() {
     150,
     100,
     "img/dialog_J.png",
-    (shift + gamecanvasWidth) / 2 - size / 2 - 25,
+    (shift + gamecanvasWidth) / 2 - size / 2,
     gamecanvasHeight - 110,
     "image",
     0,
@@ -563,7 +563,7 @@ function finalScene() {
     100,
     "img/dialog_K.png",
     (shift + gamecanvasWidth) - 150,
-    (gamecanvasHeight - 110 - size) - 110,
+    (gamecanvasHeight - 110 - size) - 105,
     "image",
     0,
     0
