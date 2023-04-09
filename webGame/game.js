@@ -589,8 +589,8 @@ function finalScene() {
   myBackground.update();
   myGamePieceChenEnd.update();
   myGamePieceKakyoinEnd.update();
-  jotaroDialog.update();
-  kalyoinDialog.update();
+  kalyoinDialogTimeout = setTimeout(function () { kalyoinDialog.update() }, 1500);
+  jotaroDialogTimeout = setTimeout(function () { jotaroDialog.update() }, 1500);
   ctx.restore();
 }
 
