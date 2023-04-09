@@ -13,22 +13,25 @@ var screenWidth;
 var screenHeight;
 var gamecanvasWidth;
 var gamecanvasHeight;
-var shift;
+var shift = 0;
+// var screenWidth = window.innerWidth;
+// var screenHeight = window.innerHeight;
+// var gamecanvasWidth = screenWidth;
+// var gamecanvasHeight = screenHeight;
+// var shift = 0;
 var myMusic;
-// var bgwidth = gamecanvasWidth;
-// var bgheight = gamecanvasHeight;
-
-// if (screenHeight > screenWidth) {
-//   gamecanvasHeight = screenWidth * (1 / whratio);
-// } else {
-//   gamecanvasWidth = screenHeight * whratio;
-// }
-// if (gamecanvasWidth < screenWidth) {
-//   shift = screenWidth / 2 - gamecanvasWidth / 2;
-// } else if (gamecanvasWidth > screenWidth) {
-//   gamecanvasWidth = screenWidth;
-//   gamecanvasHeight = screenWidth * (1 / whratio);
-// }
+var screenOrientation = screen.orientation.type;
+screen.orientation.lock(screenOrientation)
+  .then(function () {
+    screenWidth = window.innerWidth;
+    screenHeight = window.innerHeight;
+    gamecanvasWidth = screenWidth;
+    gamecanvasHeight = screenHeight;
+    shift = 0;
+  })
+  .catch(function (error) {
+    alert(error);
+  });
 
 
 
@@ -78,18 +81,8 @@ function main() {
   let finish = imgLoader.downloadAll();
   console.log("finish: " + finish);
   if (finish) {
-    const oppositeOrientation = screen.orientation.type;
-    screen.orientation.lock(oppositeOrientation).then(function () {
-      screenWidth = window.innerWidth;
-      screenHeight = window.innerHeight;
-      gamecanvasWidth = screenWidth;
-      gamecanvasHeight = screenHeight;
-      shift = 0;
-      mainMenu();
-    })
-      .catch(function (error) {
-        alert(error);
-      });
+
+    mainMenu();
 
   }
 }
