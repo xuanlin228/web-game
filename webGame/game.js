@@ -421,7 +421,7 @@ function removeDio(e) {
     }
     if (dios[i].click) {
       console.log("true");
-      dios[i].src = 'img/Dio_harm_125.png';
+      dios[i].image.src = 'img/Dio_harm_125.png';
       dios[i].update();
       // removeIndex = i;
       dios.splice(i, 1);
