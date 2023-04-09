@@ -486,6 +486,61 @@ $(".restart").click(function () {
   window.location.reload();
 
 });
+$(".leave").click(function () {
+  $("#game-over").hide();
+  ctx = myGameArea.context;
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth, 225);
+  // ctx.fillStyle = "black";
+  ctx.save();
+  ctx.globalAlpha = 1;
+  myGamePieceChenEnd = new component(
+    size,
+    size,
+    "img/Jotaro_stand_225.png",
+    (shift + gamecanvasWidth) / 2 - size / 2 - 50,
+    gamecanvasHeight / 2,
+    "image",
+    0,
+    0
+  );
+  myGamePieceKakyoinEnd = new component(
+    size,
+    size,
+    "img/Kakyoin_stand_225.png",
+    (shift + gamecanvasWidth) / 2 - 50,
+    gamecanvasHeight / 2,
+    "image",
+    0,
+    0
+  );
+  jotaroDialog = new component(
+    150,
+    100,
+    "img/dialog_J.png",
+    (shift + gamecanvasWidth) / 2 - 150,
+    gamecanvasHeight / 2 + size,
+    "image",
+    0,
+    0
+  );
+  kalyoinDialog = new component(
+    150,
+    100,
+    "img/dialog_K.png",
+    (shift + gamecanvasWidth) / 2,
+    gamecanvasHeight / 2 + size,
+    "image",
+    0,
+    0
+  );
+  myBackground.update();
+  myGamePieceChenEnd.update();
+  myGamePieceKakyoinEnd.update();
+  kalyoinDialogTimeout = setTimeout(function () { kalyoinDialog.update() }, 500);
+  jotaroDialogTimeout = setTimeout(function () { jotaroDialog.update() }, 1500);
+  ctx.restore();
+
+});
 
 function finalScene() {
   $("#game-clear").hide();
@@ -498,7 +553,7 @@ function finalScene() {
     size,
     size,
     "img/Jotaro_stand_225.png",
-    (shift + gamecanvasWidth) / 2 - size / 2,
+    (shift + gamecanvasWidth) / 2 - size / 2 - 50,
     gamecanvasHeight / 2,
     "image",
     0,
@@ -508,7 +563,7 @@ function finalScene() {
     size,
     size,
     "img/Kakyoin_stand_225.png",
-    (shift + gamecanvasWidth) / 2,
+    (shift + gamecanvasWidth) / 2 - 50,
     gamecanvasHeight / 2,
     "image",
     0,
@@ -518,7 +573,7 @@ function finalScene() {
     150,
     100,
     "img/dialog_J.png",
-    (shift + gamecanvasWidth) / 2 - 100,
+    (shift + gamecanvasWidth) / 2 - 150,
     gamecanvasHeight / 2 + size,
     "image",
     0,
