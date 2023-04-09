@@ -517,7 +517,7 @@ $(".leave").click(function () {
     150,
     100,
     "img/dialog_J.png",
-    (shift + gamecanvasWidth) / 2 - 150,
+    (shift + gamecanvasWidth) / 2 - 150 - 10,
     gamecanvasHeight - 110,
     "image",
     0,
@@ -527,7 +527,7 @@ $(".leave").click(function () {
     150,
     100,
     "img/dialog_K.png",
-    (shift + gamecanvasWidth) / 2,
+    (shift + gamecanvasWidth) / 2 + 10,
     gamecanvasHeight - 110,
     "image",
     0,
@@ -573,7 +573,7 @@ function finalScene() {
     150,
     100,
     "img/dialog_J.png",
-    (shift + gamecanvasWidth) / 2 - 150,
+    (shift + gamecanvasWidth) / 2 - 150 - 10,
     gamecanvasHeight - 110,
     "image",
     0,
@@ -583,7 +583,7 @@ function finalScene() {
     150,
     100,
     "img/dialog_K.png",
-    (shift + gamecanvasWidth) / 2,
+    (shift + gamecanvasWidth) / 2 + 10,
     gamecanvasHeight - 110,
     "image",
     0,
@@ -595,5 +595,6 @@ function finalScene() {
   kalyoinDialogTimeout = setTimeout(function () { kalyoinDialog.update() }, 500);
   jotaroDialogTimeout = setTimeout(function () { jotaroDialog.update() }, 1500);
   ctx.restore();
+
 }
 
