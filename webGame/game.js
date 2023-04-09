@@ -35,7 +35,8 @@ var imgLoader = {
     'star': 'img/icon_s.png',
     'Jotaro_stand_225': 'img/Jotaro_stand_225.png',
     'dialog_J': 'img/dialog_J.png',
-    'dialog_K': 'img/dialog_K.png'
+    'dialog_K': 'img/dialog_K.png',
+    'dio_harm': 'img/Dio_harm_125.png'
   },
   setting: function () {
     this.imgLoaded = 0;
@@ -420,6 +421,8 @@ function removeDio(e) {
     }
     if (dios[i].click) {
       console.log("true");
+      dios[i].src = 'img/Dio_harm_125.png';
+      dios[i].update();
       // removeIndex = i;
       dios.splice(i, 1);
       break;
