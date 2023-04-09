@@ -78,7 +78,7 @@ function main() {
   let finish = imgLoader.downloadAll();
   console.log("finish: " + finish);
   if (finish) {
-    const oppositeOrientation = screen.orientation;
+    const oppositeOrientation = screen.orientation.type;
     screen.orientation.lock(oppositeOrientation).then(function () {
       mainMenu();
     })
