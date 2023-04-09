@@ -498,7 +498,7 @@ $(".leave").click(function () {
     size,
     "img/Jotaro_stand_225.png",
     (shift + gamecanvasWidth) / 2 - size / 2 - 50,
-    gamecanvasHeight - 150 - size,
+    gamecanvasHeight - 110 - size,
     "image",
     0,
     0
@@ -508,7 +508,7 @@ $(".leave").click(function () {
     size,
     "img/Kakyoin_stand_225.png",
     (shift + gamecanvasWidth) / 2 - 50,
-    gamecanvasHeight - 150 - size,
+    gamecanvasHeight - 110 - size,
     "image",
     0,
     0
@@ -518,7 +518,7 @@ $(".leave").click(function () {
     100,
     "img/dialog_J.png",
     (shift + gamecanvasWidth) / 2 - 150,
-    gamecanvasHeight - 150,
+    gamecanvasHeight - 110,
     "image",
     0,
     0
@@ -528,7 +528,7 @@ $(".leave").click(function () {
     100,
     "img/dialog_K.png",
     (shift + gamecanvasWidth) / 2,
-    gamecanvasHeight - 150,
+    gamecanvasHeight - 110,
     "image",
     0,
     0
@@ -554,7 +554,7 @@ function finalScene() {
     size,
     "img/Jotaro_stand_225.png",
     (shift + gamecanvasWidth) / 2 - size / 2 - 50,
-    gamecanvasHeight - 150 - size,
+    gamecanvasHeight - 110 - size,
     "image",
     0,
     0
@@ -564,7 +564,7 @@ function finalScene() {
     size,
     "img/Kakyoin_stand_225.png",
     (shift + gamecanvasWidth) / 2 - 50,
-    gamecanvasHeight - 150 - size,
+    gamecanvasHeight - 110 - size,
     "image",
     0,
     0
@@ -574,7 +574,7 @@ function finalScene() {
     100,
     "img/dialog_J.png",
     (shift + gamecanvasWidth) / 2 - 150,
-    gamecanvasHeight - 150,
+    gamecanvasHeight - 110,
     "image",
     0,
     0
@@ -584,7 +584,7 @@ function finalScene() {
     100,
     "img/dialog_K.png",
     (shift + gamecanvasWidth) / 2,
-    gamecanvasHeight - 150,
+    gamecanvasHeight - 110,
     "image",
     0,
     0
