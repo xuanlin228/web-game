@@ -9,11 +9,11 @@ var sec = 30;
 var liveStars = [];
 var whratio = 16 / 9;
 var scaleratio = 1;
-var screenWidth = window.innerWidth;
-var screenHeight = window.innerHeight;
-var gamecanvasWidth = screenWidth;
-var gamecanvasHeight = screenHeight;
-var shift = 0;
+var screenWidth;
+var screenHeight;
+var gamecanvasWidth;
+var gamecanvasHeight;
+var shift;
 var myMusic;
 // var bgwidth = gamecanvasWidth;
 // var bgheight = gamecanvasHeight;
@@ -80,6 +80,11 @@ function main() {
   if (finish) {
     const oppositeOrientation = screen.orientation.type;
     screen.orientation.lock(oppositeOrientation).then(function () {
+      screenWidth = window.innerWidth;
+      screenHeight = window.innerHeight;
+      gamecanvasWidth = screenWidth;
+      gamecanvasHeight = screenHeight;
+      shift = 0;
       mainMenu();
     })
       .catch(function (error) {
