@@ -203,8 +203,8 @@ function cover(gamecanvasWidth, gamecanvasHeight) {
   }
   return { bgwidth, bgheight }
 }
-function characterSize(gamecanvasHeight, gamecanvasWidth) {
-  let size = 125 * (Math.min(gamecanvasHeight, gamecanvasWidth) / 375);
+function characterSize(gamecanvasHeight, gamecanvasWidth, originsize) {
+  let size = originsize * (Math.min(gamecanvasHeight, gamecanvasWidth) / 375);
   return size;
 }
 class component {
@@ -356,7 +356,7 @@ function updateGameArea() {
 function dropDio() {
   //將dropDio的interval改成70
   //while (dios.length < 6) {
-  let size = characterSize(gamecanvasHeight, gamecanvasWidth);
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth, 125);
   var myGamePieceDio = new component(
     size,
     size,
@@ -486,64 +486,11 @@ $(".restart").click(function () {
   window.location.reload();
 
 });
-// $(".leave").click(function () {
-//   $("#game-over").hide();
-//   ctx = myGameArea.context;
-//   // ctx.fillStyle = "black";
-//   ctx.save();
-//   ctx.globalAlpha = 1;
-//   myGamePieceChenEnd = new component(
-//     175,
-//     175,
-//     "img/Jotaro_stand_225.png",
-//     (shift + gamecanvasWidth) / 2 - 160,
-//     100,
-//     "image",
-//     0,
-//     0
-//   );
-//   myGamePieceKakyoinEnd = new component(
-//     175,
-//     175,
-//     "img/Kakyoin_stand_225.png",
-//     (shift + gamecanvasWidth) / 2,
-//     100,
-//     "image",
-//     0,
-//     0
-//   );
-//   jotaroDialog = new component(
-//     150,
-//     100,
-//     "img/dialog_J.png",
-//     (shift + gamecanvasWidth) / 2 - 240,
-//     100,
-//     "image",
-//     0,
-//     0
-//   );
-//   kalyoinDialog = new component(
-//     150,
-//     100,
-//     "img/dialog_K.png",
-//     (shift + gamecanvasWidth) / 2 + 150,
-//     100,
-//     "image",
-//     0,
-//     0
-//   );
-//   myBackground.update();
-//   myGamePieceChenEnd.update();
-//   myGamePieceKakyoinEnd.update();
-//   jotaroDialog.update();
-//   kalyoinDialog.update();
-//   ctx.restore();
-// });
 
 function finalScene() {
   $("#game-clear").hide();
   ctx = myGameArea.context;
-  let size = characterSize(gamecanvasHeight, gamecanvasWidth);
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth, 225);
   // ctx.fillStyle = "black";
   ctx.save();
   ctx.globalAlpha = 1;
@@ -561,7 +508,7 @@ function finalScene() {
     size,
     size,
     "img/Kakyoin_stand_225.png",
-    (shift + gamecanvasWidth) / 2 + size / 2,
+    (shift + gamecanvasWidth) / 2,
     gamecanvasHeight / 2,
     "image",
     0,
@@ -581,7 +528,7 @@ function finalScene() {
     150,
     100,
     "img/dialog_K.png",
-    (shift + gamecanvasWidth) / 2 + 150,
+    (shift + gamecanvasWidth) / 2,
     gamecanvasHeight / 2 + size,
     "image",
     0,
