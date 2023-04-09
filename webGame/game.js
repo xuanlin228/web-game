@@ -401,8 +401,10 @@ function everyinterval(n) {
 function removeDio(e) {
   // myGameArea.x = e.offsetX;
   // myGameArea.y = e.offsetY;
-  myGameArea.x = e.touches[0].clientX;
-  myGameArea.y = e.touches[0].clientY;
+  // myGameArea.x = e.touches[0].clientX;
+  // myGameArea.y = e.touches[0].clientY;
+  myGameArea.x = e.changedTouches[0].clientX;
+  myGameArea.y = e.changedTouches[0].clientY;
   console.log(
     "offsetX: " + myGameArea.x + " " + "offsetY: " + myGameArea.y
   );
