@@ -427,12 +427,10 @@ function removeDio(e) {
     if (dios[i].click) {
       console.log("true");
       dios[i].image.src = 'img/Dio_harm_125.png';
+      dios[i].x = dios[i].x + 1;
       dios[i].update();
-      setTimeout(function () {
-        dios.splice(i, 1);
-      }, 3);
       // removeIndex = i;
-      // dios.splice(i, 1);
+      dios.splice(i, 1);
       break;
     } else {
       console.log("false");
