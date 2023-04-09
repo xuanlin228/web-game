@@ -31,7 +31,7 @@ var myMusic;
 // }
 
 const oppositeOrientation = screen.orientation.type.startsWith("portrait") ? "landscape" : "portrait";
-screen.orientation.lock(oppositeOrientation)
+screen.orientation.lock(oppositeOrientation);
 
 var imgLoader = {
   imgs: {
