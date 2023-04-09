@@ -335,6 +335,9 @@ function updateGameArea() {
   for (i = 0; i < dios.length; i++) {
     if (collision(dios[i], myGamePieceCheng)) {
       liveStars.pop();
+      dios[i].image.src = 'img/Dio_harm_125.png';
+      dios[i].x = dios[i].x + 1;
+      dios[i].update();
       dios.splice(i, 1);
       break;
     }
