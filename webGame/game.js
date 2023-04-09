@@ -375,7 +375,7 @@ function dropDio() {
     50,
     "image",
     0,
-    random(4, 5) //speed of falling
+    random(3, 5) //speed of falling
   );
   dios.push(myGamePieceDio);
   //}
