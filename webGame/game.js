@@ -86,7 +86,7 @@ function startGame() {
   let bgsize = cover(gamecanvasWidth, gamecanvasHeight);
   let bgwidth = bgsize.bgwidth;
   let bgheight = bgsize.bgheight;
-  let size = characterSize(gamecanvasHeight, gamecanvasWidth);
+  let size = characterSize(gamecanvasHeight, gamecanvasWidth, 125);
   myGamePieceCheng = new component(
     size,
     size,
