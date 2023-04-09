@@ -195,7 +195,7 @@ var myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   stop: function () {
-    
+
     clearInterval(this.interval);
   },
 };
@@ -495,7 +495,17 @@ function gameclear() {
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameclearrMenu.style.display = "block";
   timeoutid = setTimeout(finalScene, 3000);
-  // clearTimeout(timeoutid);
+  showrestartid = setTimeout(gameRestart, 10000);
+}
+function gameRestart() {
+  gameoverMenu = document.getElementById("game-restart");
+  let root = document.documentElement; //選取root
+  root.style.setProperty("--bgwidth", gamecanvasWidth);
+  root.style.setProperty("--bgheight", gamecanvasHeight);
+  root.style.setProperty("--shift", shift);
+  root.style.setProperty("--display", "block");
+  // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
+  gameoverMenu.style.display = "block";
 }
 $(".play").click(function () {
   $("#menu").hide();
@@ -506,61 +516,7 @@ $(".restart").click(function () {
   window.location.reload();
 
 });
-$(".leave").click(function () {
-  $("#game-over").hide();
-  ctx = myGameArea.context;
-  let size = characterSize(gamecanvasHeight, gamecanvasWidth, 225);
-  // ctx.fillStyle = "black";
-  ctx.save();
-  ctx.globalAlpha = 1;
-  myGamePieceChenEnd = new component(
-    size,
-    size,
-    "img/Jotaro_stand_225.png",
-    (shift + gamecanvasWidth) / 2 - size / 2 - 50,
-    gamecanvasHeight - 110 - size,
-    "image",
-    0,
-    0
-  );
-  myGamePieceKakyoinEnd = new component(
-    size,
-    size,
-    "img/Kakyoin_stand_225.png",
-    (shift + gamecanvasWidth) / 2 - 50,
-    gamecanvasHeight - 110 - size,
-    "image",
-    0,
-    0
-  );
-  jotaroDialog = new component(
-    150,
-    100,
-    "img/dialog_J.png",
-    (shift + gamecanvasWidth) / 2 - 150 - 10,
-    gamecanvasHeight - 110,
-    "image",
-    0,
-    0
-  );
-  kalyoinDialog = new component(
-    150,
-    100,
-    "img/dialog_K.png",
-    (shift + gamecanvasWidth) / 2 + 10,
-    gamecanvasHeight - 110,
-    "image",
-    0,
-    0
-  );
-  myBackground.update();
-  myGamePieceChenEnd.update();
-  myGamePieceKakyoinEnd.update();
-  kalyoinDialogTimeout = setTimeout(function () { kalyoinDialog.update() }, 500);
-  jotaroDialogTimeout = setTimeout(function () { jotaroDialog.update() }, 1500);
-  ctx.restore();
 
-});
 
 function finalScene() {
   $("#game-clear").hide();
