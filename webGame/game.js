@@ -177,8 +177,11 @@ var myGameArea = {
     //   removeDio(e);
 
     // });
-    window.addEventListener('touchstart', removeDio);
+    window.addEventListener('touchstart', function (e) {
+      console.log("touches");
+    });
     window.addEventListener('touchend', function (e) {
+      removeDio(e);
       myGameArea.x = 0;
       myGameArea.y = 0;
     })
