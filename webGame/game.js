@@ -30,8 +30,7 @@ var myMusic;
 //   gamecanvasHeight = screenWidth * (1 / whratio);
 // }
 
-const oppositeOrientation = screen.orientation.type.startsWith("portrait") ? "landscape" : "portrait";
-screen.orientation.lock(oppositeOrientation);
+
 
 var imgLoader = {
   imgs: {
@@ -79,7 +78,14 @@ function main() {
   let finish = imgLoader.downloadAll();
   console.log("finish: " + finish);
   if (finish) {
-    mainMenu();
+    const oppositeOrientation = screen.orientation;
+    screen.orientation.lock(oppositeOrientation).then(function () {
+      mainMenu();
+    })
+      .catch(function (error) {
+        alert(error);
+      });
+
   }
 }
 
