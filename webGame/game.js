@@ -318,7 +318,7 @@ function updateGameArea() {
     }
   }
   if (myGameArea.frameNo == 1 || everyinterval(70)) {
-    while (dios.length < 2) {
+    while (dios.length < 3) {
       dropDio();
     }
   }
