@@ -495,7 +495,10 @@ function gameclear() {
   // gameoverMenu.style.backgroundImage = "url('img/minigame_bg.jpg')";
   gameclearrMenu.style.display = "block";
   timeoutid = setTimeout(finalScene, 3000);
-  showrestartid = setTimeout(gameRestart, 10000);
+  showrestartid = setTimeout(() => {
+    $("#game-restart").hide();
+    gameRestart();
+  }, 10000);
 }
 function gameRestart() {
   gameoverMenu = document.getElementById("game-restart");
