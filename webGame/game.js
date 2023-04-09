@@ -9,29 +9,18 @@ var sec = 30;
 var liveStars = [];
 var whratio = 16 / 9;
 var scaleratio = 1;
-var screenWidth;
-var screenHeight;
-var gamecanvasWidth;
-var gamecanvasHeight;
+// var screenWidth;
+// var screenHeight;
+// var gamecanvasWidth;
+// var gamecanvasHeight;
+// var shift;
+var screenWidth = window.innerWidth;
+var screenHeight = window.innerHeight;
+var gamecanvasWidth = screenWidth;
+var gamecanvasHeight = screenHeight;
 var shift = 0;
-// var screenWidth = window.innerWidth;
-// var screenHeight = window.innerHeight;
-// var gamecanvasWidth = screenWidth;
-// var gamecanvasHeight = screenHeight;
-// var shift = 0;
 var myMusic;
-var screenOrientation = screen.orientation.type;
-screen.orientation.lock(screenOrientation)
-  .then(function () {
-    screenWidth = window.innerWidth;
-    screenHeight = window.innerHeight;
-    gamecanvasWidth = screenWidth;
-    gamecanvasHeight = screenHeight;
-    shift = 0;
-  })
-  .catch(function (error) {
-    alert(error);
-  });
+
 
 
 
@@ -81,9 +70,8 @@ function main() {
   let finish = imgLoader.downloadAll();
   console.log("finish: " + finish);
   if (finish) {
-
+    window.screen.orientation.lock("portrait");
     mainMenu();
-
   }
 }
 
