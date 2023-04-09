@@ -195,6 +195,7 @@ var myGameArea = {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   },
   stop: function () {
+    
     clearInterval(this.interval);
   },
 };
@@ -365,6 +366,7 @@ function updateGameArea() {
 
   myGameTimer.update();
 }
+
 
 function dropDio() {
   //將dropDio的interval改成70
